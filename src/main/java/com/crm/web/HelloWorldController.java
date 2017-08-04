@@ -2,6 +2,9 @@ package com.crm.web;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,11 +88,22 @@ public class HelloWorldController {
 	public String getSysParam1(){	
 			return a.getValue("1", "1");
 	}
+	
 	@RequestMapping("/getHashMap2")
 	public String getSysParam2(){	
 		HashMap<String,HashMap<String,String>> b =a.getHashMap();
 		return b.get("1").toString();
-}
+	}
+	
+	@RequestMapping("/uid")
+    String uid(HttpSession session) {
+        UUID uid = (UUID) session.getAttribute("uid");
+        if (uid == null) {
+            uid = UUID.randomUUID();
+        }
+        session.setAttribute("uid", uid);
+        return session.getId();
+    }
 
 
 }

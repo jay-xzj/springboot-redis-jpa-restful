@@ -165,77 +165,10 @@ Entity中不映射成列的字段得加@Transient 注解，不加注解也会映
     <groupId>org.springframework.boot</groupId>  
     <artifactId>spring-boot-starter-redis</artifactId>  
 </dependency>  
-2、添加配置文件
-# REDIS (RedisProperties)
-# Redis数据库索引（默认为0）
-spring.redis.database=0  
-# Redis服务器地址
-spring.redis.host=127.0.0.1
-# Redis服务器连接端口
-spring.redis.port=6379  
-# Redis服务器连接密码（默认为空）
-spring.redis.password=  
-# 连接池最大连接数（使用负值表示没有限制）
-spring.redis.pool.max-active=8  
-# 连接池最大阻塞等待时间（使用负值表示没有限制）
-spring.redis.pool.max-wait=-1  
-# 连接池中的最大空闲连接
-spring.redis.pool.max-idle=8  
-# 连接池中的最小空闲连接
-spring.redis.pool.min-idle=0  
-# 连接超时时间（毫秒）
-spring.redis.timeout=0  
-3、添加cache的配置类
-@Configuration
-@EnableCaching
-public class RedisConfig extends CachingConfigurerSupport{
-	
-	@Bean
-	public KeyGenerator keyGenerator() {
-        return new KeyGenerator() {
-            @Override
-            public Object generate(Object target, Method method, Object... params) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(target.getClass().getName());
-                sb.append(method.getName());
-                for (Object obj : params) {
-                    sb.append(obj.toString());
-                }
-                return sb.toString();
-            }
-        };
-    }
-@SuppressWarnings("rawtypes")
-    @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-        RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-        //设置缓存过期时间
-        //rcm.setDefaultExpiration(60);//秒
-        return rcm;
-    }
-    
-    @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-        StringRedisTemplate template = new StringRedisTemplate(factory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        template.afterPropertiesSet();
-        return template;
-    }
-}
-3、自动根据方法生成缓存
-@RequestMapping("/getUser")
-@Cacheable(value="user-key"，keyGenerator = "keyGenerator")／／keygenerater要添加，否则报错哦
-public User getUser() {
-    User user=userRepository.findByUserName("aa");
-    System.out.println("若下面没出现“无缓存的时候调用”字样且能打印出数据表示测试成功");  
-    return user;
-}
-其中value的值就是缓存到redis中的key
+2、添加application.properties配置文件
+
+3、实现RedisConfig
+
 
 
 六、使用MAVEN构建：

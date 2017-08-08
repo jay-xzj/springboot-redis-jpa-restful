@@ -1,110 +1,12 @@
-# springboot-redis-jpa-restful
-一、pom.xml配置
+# 总体说明
+采用spring boot搭建web服务，提供restful的接口。
+数据库驱动采用的oracle jdbc。
+后台缓存使用redis。
+持久化使用jpa，减少dao层代码。
+AOP实现logAdvice，自定义输出日志。
+错误代码，异常信息等进行了统一处理。
 
-
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-        		<groupId>org.springframework.boot</groupId>
-        		<artifactId>spring-boot-starter-web</artifactId>
-        </dependency>    
-        
-        <!-- 自动编译加载 -->
-        <dependency>
-        		<groupId>org.springframework.boot</groupId>
-        		<artifactId>spring-boot-devtools</artifactId>
-        		<optional>true</optional>
-        </dependency> 
-        
-        <!-- oracle驱动，maven 未提供，需外部引入 -->         
-         <dependency>
-         	<groupId>com.oracle</groupId>
-    			<artifactId>ojdbc6</artifactId>
-    			<version>11.2.0</version>
-		</dependency>
-        
-         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        
-       <!-- redis依赖 --> 
-        <dependency>  
-    			<groupId>org.springframework.boot</groupId>  
-    			<artifactId>spring-boot-starter-redis</artifactId>
-    			<version>1.3.1.RELEASE</version>    			  
-		</dependency> 
-		
-		<!-- jpa依赖 -->
-		<dependency>
-        		<groupId>org.springframework.boot</groupId>
-        		<artifactId>spring-boot-starter-data-jpa</artifactId>
-   		</dependency>
-   		
-   		<!-- aop依赖 -->
-   		<dependency>
-        		<groupId>org.springframework.boot</groupId>
-        		<artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        
-        <dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.4</version>
-		</dependency>
-		
-		<dependency>
-    			<groupId>org.springframework.session</groupId>
-    			<artifactId>spring-session-data-redis</artifactId>
-		</dependency>
-                       
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-                		<fork>true</fork>
-            		</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-
-</project>
+ps.一些测试用的test可忽略
 
 二、aop说明，日志输出使用
 1、配置依赖：
@@ -114,7 +16,6 @@
 </dependency>
 
 可以看下面关于AOP的默认配置属性，其中spring.aop.auto属性默认是开启的，也就是说只要引入了AOP依赖后，默认已经增加了@EnableAspectJAutoProxy。
-# AOP
 spring.aop.auto=true 
 spring.aop.proxy-target-class=false 
 

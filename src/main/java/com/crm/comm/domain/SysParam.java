@@ -1,4 +1,4 @@
-package com.crm.domain;
+package com.crm.comm.domain;
 
 import java.io.Serializable;
 

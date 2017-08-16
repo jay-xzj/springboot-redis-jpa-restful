@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crm.comm.Const;
 import com.crm.comm.config.CasheConfig;
-import com.crm.domain.SysParam;
-import com.crm.domain.User;
+import com.crm.comm.domain.SysParam;
+import com.crm.comm.domain.User;
 import com.crm.repository.SysParamRepository;
 import com.crm.comm.log.LoggerManage;
 

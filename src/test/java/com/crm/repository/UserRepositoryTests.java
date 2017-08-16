@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.crm.domain.User;
+import com.crm.comm.domain.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.crm.domain.SysParam;
+import com.crm.comm.domain.SysParam;
 import com.crm.repository.SysParamRepository;
 
 

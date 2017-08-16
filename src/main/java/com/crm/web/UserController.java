@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crm.domain.User;
+import com.crm.comm.domain.User;
 import com.crm.repository.UserRepository;
 import com.crm.service.UserService;
 

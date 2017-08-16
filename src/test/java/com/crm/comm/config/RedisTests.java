@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.crm.domain.User;
+import com.crm.comm.domain.User;
 
 import junit.framework.Assert;
 

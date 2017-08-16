@@ -12,7 +12,7 @@ import com.crm.repository.SysParamRepository;
 
 
 @Component
-public class CasheConfig {
+public class CacheConfig {
 	
 	private HashMap<String,HashMap<String,String>>maps = new HashMap<String,HashMap<String,String>>();
 	
@@ -77,20 +77,13 @@ public class CasheConfig {
     }
     
     //加入数据库
-    public void addToData(String code,String key,String value) {
-    		List<SysParam> sysParamList = sysParamRepository.findByParamCodeAndParamKey(code, key);
+    public void addToData(SysParam sysParam) {
+    		List<SysParam> sysParamList = sysParamRepository.findByParamCodeAndParamKey(sysParam.getParamCode(), sysParam.getParamKey());
     		if (sysParamList!=null&&sysParamList.size()!=0) {
     			
     		}
     		else {
-    			SysParam sysParam = new SysParam();
-    			sysParam.setParamCode(code);
-    			sysParam.setParamKey(key);
-    			sysParam.setParamValue(value);
-    			sysParam.setParamDesc("ddd");
-    			sysParam.setRegTime("ddd");
     			sysParamRepository.save(sysParam);
-
     		}
     		
     }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crm.comm.Const;
-import com.crm.comm.config.CasheConfig;
+import com.crm.comm.config.CacheConfig;
 import com.crm.comm.domain.SysParam;
 import com.crm.comm.domain.User;
 import com.crm.repository.SysParamRepository;
@@ -83,7 +83,7 @@ public class HelloWorldController {
 	}
 	
 	@Autowired
-	private CasheConfig a;
+	private CacheConfig a;
 	@RequestMapping("/getHashMap1")
 	public String getSysParam1(){	
 			return a.getValue("1", "1");

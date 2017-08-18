@@ -50,7 +50,7 @@ public class StaticDataCacheService implements CacheConfig {
     }
     
     //根据codeType和CodeValue获取对象
-    public BsStaticData getName(String key,String code){
+    public BsStaticData getObj(String key,String code){
     	    if(StringUtils.isBlank(key)||StringUtils.isBlank(code)) {
     	    		return null;
     	    }

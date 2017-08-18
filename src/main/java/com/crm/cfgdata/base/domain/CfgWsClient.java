@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "CFG_WS_CLENT")
+@Entity(name = "CFG_WS_CLIENT_1")
 public class CfgWsClient implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class CfgWsClient implements Serializable{
 	@Column(nullable = false)
 	private String methodParameter ;	
 	@Column(nullable = false)
-	private String methodRetrurnType;	
+	private String methodReturnType;	
 	@Column(nullable = false)
 	private String urlAddress ;	
 	@Column(nullable = true)
@@ -46,7 +46,7 @@ public class CfgWsClient implements Serializable{
 		return methodParameter;
 	}
 	public String getMethodRetrurnType() {
-		return methodRetrurnType;
+		return methodReturnType;
 	}
 	public String getUrlAddress() {
 		return urlAddress;
@@ -78,8 +78,8 @@ public class CfgWsClient implements Serializable{
 	public void setMethodParameter(String methodParameter) {
 		this.methodParameter = methodParameter;
 	}
-	public void setMethodRetrurnType(String methodRetrurnType) {
-		this.methodRetrurnType = methodRetrurnType;
+	public void setMethodRetrurnType(String methodReturnType) {
+		this.methodReturnType = methodReturnType;
 	}
 	public void setUrlAddress(String urlAddress) {
 		this.urlAddress = urlAddress;

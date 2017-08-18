@@ -14,8 +14,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.cache.StaticDataCacheService;
 import com.crm.cfgdata.base.domain.BsStaticData;
+import com.crm.cfgdata.base.domain.CfgWsClient;
 import com.crm.cfgdata.base.repository.BsStaticDataRepository;
 import com.crm.comm.Const;
 import com.crm.comm.config.CacheConfig;
@@ -95,7 +97,7 @@ public class HelloWorldController {
 	
 	@RequestMapping("/getHashMap2")
 	public BsStaticData getSysParam2(){	
-		return a.getName("CM_ACCOUNT_PAY_METHOD", "1");
+		return a.getObj("CM_ACCOUNT_PAY_METHOD", "1");
 	}
 	
 	@RequestMapping("/uid")
@@ -112,6 +114,14 @@ public class HelloWorldController {
 	@RequestMapping("/testFindAll")
 	public List<BsStaticData> testFindAll(){	
 		return bsStaticDataRepository.findAll();
+	}
+	
+	
+	@Autowired
+	private  CfgWsClientCacheService cfgWsClientCacheService;;
+	@RequestMapping("/getCache")
+	public CfgWsClient getCache(){	
+		return cfgWsClientCacheService.getObj("ESB_RES_TMNL_ACCE_SALE_001");
 	}
 
 

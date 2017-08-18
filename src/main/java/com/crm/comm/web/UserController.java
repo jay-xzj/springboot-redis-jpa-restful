@@ -1,4 +1,4 @@
-package com.crm.web;
+package com.crm.comm.web;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crm.comm.domain.User;
-import com.crm.repository.UserRepository;
-import com.crm.service.UserService;
+import com.crm.comm.repository.UserRepository;
+import com.crm.comm.service.UserService;
 
 
 @RestController

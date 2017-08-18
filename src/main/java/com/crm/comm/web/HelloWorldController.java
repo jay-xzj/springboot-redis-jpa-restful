@@ -1,7 +1,8 @@
-package com.crm.web;
+package com.crm.comm.web;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -13,12 +14,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crm.cfgdata.base.cache.StaticDataCacheService;
+import com.crm.cfgdata.base.domain.BsStaticData;
+import com.crm.cfgdata.base.repository.BsStaticDataRepository;
 import com.crm.comm.Const;
 import com.crm.comm.config.CacheConfig;
 import com.crm.comm.domain.SysParam;
 import com.crm.comm.domain.User;
-import com.crm.repository.SysParamRepository;
 import com.crm.comm.log.LoggerManage;
+import com.crm.comm.repository.SysParamRepository;
 
 
 @RestController
@@ -83,16 +87,15 @@ public class HelloWorldController {
 	}
 	
 	@Autowired
-	private CacheConfig a;
+	private StaticDataCacheService a;
 	@RequestMapping("/getHashMap1")
-	public String getSysParam1(){	
-			return a.getValue("1", "1");
+	public List<BsStaticData> getSysParam1(){	
+		return a.getList("CM_ACCOUNT_PAY_METHOD");	
 	}
 	
 	@RequestMapping("/getHashMap2")
-	public String getSysParam2(){	
-		HashMap<String,HashMap<String,String>> b =a.getHashMap();
-		return b.get("1").toString();
+	public BsStaticData getSysParam2(){	
+		return a.getName("CM_ACCOUNT_PAY_METHOD", "1");
 	}
 	
 	@RequestMapping("/uid")
@@ -104,6 +107,12 @@ public class HelloWorldController {
         session.setAttribute("uid", uid);
         return session.getId();
     }
+	@Autowired
+	private  BsStaticDataRepository bsStaticDataRepository;;
+	@RequestMapping("/testFindAll")
+	public List<BsStaticData> testFindAll(){	
+		return bsStaticDataRepository.findAll();
+	}
 
 
 }

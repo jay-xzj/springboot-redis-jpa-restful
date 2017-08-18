@@ -1,4 +1,4 @@
-package com.crm.service;
+package com.crm.comm.service;
 
 
 public interface RedisService {

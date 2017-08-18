@@ -5,19 +5,24 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+
+import com.crm.comm.domain.SysParamPK;
 
 @Entity(name = "BS_STATIC_DATA")
+@IdClass(BsStaticDataPK.class)
 public class BsStaticData implements Serializable{
 	
 		private static final long serialVersionUID = 1L;
 		
-		@Column(nullable = false)
 		@Id
+		@Column(nullable = false)
 		private String codeType;
 
+		@Id
 		@Column(nullable = false)
 		private String codeValue;
-		
+
 		@Column(nullable = false)
 		private String codeName;
 		

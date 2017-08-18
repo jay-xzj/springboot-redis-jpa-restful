@@ -1,11 +1,11 @@
-package com.crm.service.impl;
-
-import com.crm.service.RedisService;
+package com.crm.comm.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import com.crm.comm.service.RedisService;
 
 import java.util.concurrent.TimeUnit;
 

@@ -5,7 +5,7 @@
  * $Id: PUB_INFODescriptor.java 112 2015-02-10 11:13:29Z wanglf $
  */
 
-package esbInvoke.pojo;
+package com.crm.esb.invoke.pojo;
 
   //---------------------------------/
  //- Imported classes and packages -/

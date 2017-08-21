@@ -1,4 +1,4 @@
-package esbInvoke;
+package com.crm.esb.invoke;
 
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -20,7 +20,8 @@ import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import org.apache.axis.utils.StringUtils;
 
-import esbInvoke.Parameter;
+import com.crm.cfgdata.base.domain.CfgWsClient;
+import com.crm.esb.invoke.Parameter;
 
 public class WsClient
 {
@@ -237,7 +238,7 @@ public class WsClient
         return (String[])(String[])strKey.toArray(new String[0]);
     }
 	public static void main(String[] args){
-		esbInvoke.xbean.BUSI_INFO busiInfo = new esbInvoke.xbean.BUSI_INFO();
+		com.crm.esb.invoke.xbean.BUSI_INFO busiInfo = new com.crm.esb.invoke.xbean.BUSI_INFO();
 		busiInfo.setBILL_ID("13566369050");
 		String returnValue="";
 		try{

@@ -1,4 +1,4 @@
-package esbInvoke;
+package com.crm.esb.invoke;
 
 import java.io.Reader;
 import java.io.StringReader;

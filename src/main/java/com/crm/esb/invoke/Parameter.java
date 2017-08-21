@@ -1,4 +1,4 @@
-package esbInvoke;
+package com.crm.esb.invoke;
 
 
 import javax.xml.namespace.QName;

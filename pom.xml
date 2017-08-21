@@ -89,6 +89,68 @@
     			<groupId>org.springframework.session</groupId>
     			<artifactId>spring-session-data-redis</artifactId>
 		</dependency>
+	
+	<!-- cache配置 -->
+	<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-cache</artifactId>
+	</dependency>
+	
+	<!-- esb LIB-->
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>asrt</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>axis</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>castor</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>commons-discovery</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>commons-lang-2.4</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>commons-logging</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>jaxrpc</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>wsdl4j</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>xercesImpl</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	<dependency>
+    		<groupId>com.esb</groupId>
+    		<artifactId>xstream</artifactId>
+    		<version>1.0</version>
+	</dependency>
+	
+	
                        
 	</dependencies>
 

@@ -1,4 +1,4 @@
-package esbInvoke;
+package com.crm.esb.invoke;
 
 import java.sql.Timestamp;
 
@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 //import com.asiainfo.aiccsp2.common.util.CastTimeUtil;
 //import com.asiainfo.aiccsp2.common.util.ServiceLogDeal;
 
-import esbInvoke.WsClient;
+
 
 public class SoapUtil { 
 /**

@@ -1,9 +1,8 @@
-package esbInvoke;
+package com.crm.esb.invoke;
 
+import com.crm.esb.invoke.pojo.PUB_INFO;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-
-import esbInvoke.pojo.PUB_INFO;
 
 
 /**

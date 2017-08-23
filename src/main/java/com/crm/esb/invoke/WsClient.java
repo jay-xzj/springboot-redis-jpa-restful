@@ -19,13 +19,20 @@ import org.apache.axis.encoding.ser.ArraySerializerFactory;
 import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import org.apache.axis.utils.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.domain.CfgWsClient;
 import com.crm.esb.invoke.Parameter;
 
+
 public class WsClient
 {
-
+	
+	
     private static final int DEFAULT_TIMEOUT_SECONDS = 3;
     private CfgWsClient objCfgWsClient;
     private Service service;
@@ -36,10 +43,10 @@ public class WsClient
 
     static 
     {
-    	//TODO log最后去做
+     	//TODO log最后去做
         //log = LogFactory.getLog(com/asiainfo/appframe/ext/exeframe/ws/client/WsClient);
         CONCURRENT_CAPACITY = 15;
-        CONCURRENT_ACQUIRE_TIMEOUT_SECONDS = 3;
+        CONCURRENT_ACQUIRE_TIMEOUT_SECONDS = 3;        
         AxisProperties.setProperty("axis.http.client.maximum.total.connections", "30");
         AxisProperties.setProperty("axis.http.client.maximum.connections.per.host", "30");
         AxisProperties.setProperty("axis.http.client.connection.pool.timeout", "30");
@@ -52,20 +59,33 @@ public class WsClient
         //log.error((new StringBuilder()).append("ws current capacity timeout:").append(CONCURRENT_ACQUIRE_TIMEOUT_SECONDS).append(" seconds").toString());
     }
 
-  public WsClient(String cfgWsClientCode)
+  @Autowired
+  private CfgWsClientCacheService cfgWsClientCacheService;
+ 
+  public WsClient(CfgWsClient cfgWsClient)
         throws Exception
     {
-    	objCfgWsClient = new CfgWsClient();
+	    objCfgWsClient = new CfgWsClient();
         service = null;
         //TODO 换成读取新配置
-        objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_MULTI_MULTIQRY_001");
+       
+        /*objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_MULTI_MULTIQRY_001");
         objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_MULTI_MULTIQRY_001");
         objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
         objCfgWsClient.setMethodRetrurnType("http://www.w3.org/2001/XMLSchema;string");
         objCfgWsClient.setTimeoutSeconds(10L);
         objCfgWsClient.setOperationStyle("rpc");
         objCfgWsClient.setOperationUse("encoded");
-        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_MULTI_MULTIQRY_001?wsdl");
+        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_MULTI_MULTIQRY_001?wsdl");*/
+        objCfgWsClient.setCfgWsClientCode(cfgWsClient.getCfgWsClientCode());
+        objCfgWsClient.setMethodName(cfgWsClient.getMethodName());
+        objCfgWsClient.setMethodParameter(cfgWsClient.getMethodParameter());
+        objCfgWsClient.setMethodRetrurnType(cfgWsClient.getMethodRetrurnType());
+        objCfgWsClient.setTimeoutSeconds(cfgWsClient.getTimeoutSeconds());
+        objCfgWsClient.setOperationStyle(cfgWsClient.getOperationStyle());
+        objCfgWsClient.setOperationUse(cfgWsClient.getOperationUse());
+        objCfgWsClient.setUrlAddress(cfgWsClient.getUrlAddress());
+        
         service = new Service();
     }
 
@@ -237,31 +257,7 @@ public class WsClient
 
         return (String[])(String[])strKey.toArray(new String[0]);
     }
-	public static void main(String[] args){
-		com.crm.esb.invoke.xbean.BUSI_INFO busiInfo = new com.crm.esb.invoke.xbean.BUSI_INFO();
-		busiInfo.setBILL_ID("13566369050");
-		String returnValue="";
-		try{
-			WsClient client = new WsClient("ESB_CS_QRY_MULTI_MULTIQRY_003");
-			
-			String reqXml = null;
-			
-			//TODO LOG相关，时间戳
-			//Timestamp startTime = ServiceManager.getIdGenerator().getSysDate();
-			//long beginTime = System.currentTimeMillis();
-			try {
-				reqXml = XStreamUtil.getEsbReqXml(busiInfo);
-				returnValue = (String)client.invoke(new Object[] {reqXml});
-			} catch (Exception e) {
-				returnValue=e.getMessage();
-				throw new Exception(e);
-			}
-		
-		}catch(Exception e){
-			System.out.print(e.getMessage());
-		}
-		System.out.print(returnValue);
-	}
+	
 }
 
 

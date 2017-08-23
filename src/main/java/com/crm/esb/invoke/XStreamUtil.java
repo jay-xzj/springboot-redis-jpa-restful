@@ -136,6 +136,7 @@ public class XStreamUtil {
 		PUB_INFO pubInfo = new PUB_INFO();
 		pubInfo.setSYS_OP_ID(ESB_SYS_OP_ID);
 		pubInfo.setSYS_PASSWORD(ESB_SYS_PASSWORD);
+		//需修改成前台传入的用户和机构参数
 		pubInfo.setOP_ID("10013691");
 		pubInfo.setOP_ORG_ID("15");
 		

@@ -2,6 +2,8 @@ package com.crm.esb.invoke;
 
 import java.sql.Timestamp;
 
+import com.crm.cfgdata.base.domain.CfgWsClient;
+
 //import com.ai.appframe2.common.SessionManager;
 //import com.ai.appframe2.privilege.UserInfoInterface;
 //import com.asiainfo.aiccsp2.common.util.CastTimeUtil;
@@ -23,7 +25,8 @@ public class SoapUtil {
 * @version: v1.0.0
 * @author: zhouqishan
 */
-	public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
+	public static String invokeMethod(CfgWsClient serviceName,Object busiInfo) throws Exception {
+		
 		WsClient client = new WsClient(serviceName);
 		String returnValue="";
 		String reqXml = null;

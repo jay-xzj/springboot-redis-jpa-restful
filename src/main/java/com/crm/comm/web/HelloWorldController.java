@@ -25,6 +25,8 @@ import com.crm.comm.domain.SysParam;
 import com.crm.comm.domain.User;
 import com.crm.comm.log.LoggerManage;
 import com.crm.comm.repository.SysParamRepository;
+import com.crm.esb.invoke.WsClient;
+import com.crm.esb.invoke.XStreamUtil;
 
 
 @RestController
@@ -118,11 +120,37 @@ public class HelloWorldController {
 	
 	
 	@Autowired
-	private  CfgWsClientCacheService cfgWsClientCacheService;;
+	private  CfgWsClientCacheService cfgWsClientCacheService;
 	@RequestMapping("/getCache")
 	public CfgWsClient getCache(){	
-		return cfgWsClientCacheService.getObj("ESB_RES_TMNL_ACCE_SALE_001");
+		return cfgWsClientCacheService.getObj("ESB_CS_QRY_MULTI_MULTIQRY_001");
 	}
-
+   
+	@RequestMapping("/getEsb")	
+	public String getEsb(){
+		com.crm.esb.invoke.xbean.BUSI_INFO busiInfo = new com.crm.esb.invoke.xbean.BUSI_INFO();
+		busiInfo.setBILL_ID("13566369050");
+		String returnValue="";
+		try{
+			CfgWsClient cfgWsClient = new CfgWsClient();
+			cfgWsClient =cfgWsClientCacheService.getObj("ESB_CS_QRY_MULTI_MULTIQRY_001");
+			WsClient client = new WsClient(cfgWsClient);
+			String reqXml = null;
+		    //TODO LOG相关，时间戳
+			//Timestamp startTime = ServiceManager.getIdGenerator().getSysDate();
+			//long beginTime = System.currentTimeMillis();
+			try {
+				reqXml = XStreamUtil.getEsbReqXml(busiInfo);
+				returnValue = (String)client.invoke(new Object[] {reqXml});
+			} catch (Exception e) {
+				returnValue=e.getMessage();
+				throw new Exception(e);
+			}
+		}catch(Exception e){
+			System.out.print(e.getMessage());
+		}
+		System.out.print(returnValue);
+		return returnValue;
+	}
 
 }

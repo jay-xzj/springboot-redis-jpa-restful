@@ -5,7 +5,7 @@
  * $Id$
  */
 
-package com.crm.esb.invoke.xbean;
+package com.crm.esb.invoke.xbeans;
 
   //---------------------------------/
  //- Imported classes and packages -/
@@ -110,10 +110,10 @@ public class BUSI_INFO implements java.io.Serializable {
      * 
      * @param reader
     **/
-    public static com.crm.esb.invoke.xbean.BUSI_INFO unmarshal(java.io.Reader reader)
+    public static com.crm.esb.invoke.xbeans.BUSI_INFO unmarshal(java.io.Reader reader)
         throws org.exolab.castor.xml.MarshalException, org.exolab.castor.xml.ValidationException
     {
-        return (com.crm.esb.invoke.xbean.BUSI_INFO) Unmarshaller.unmarshal(com.crm.esb.invoke.xbean.BUSI_INFO.class, reader);
+        return (com.crm.esb.invoke.xbeans.BUSI_INFO) Unmarshaller.unmarshal(com.crm.esb.invoke.xbeans.BUSI_INFO.class, reader);
     } //-- esbInvoke.xbean.BUSI_INFO unmarshal(java.io.Reader) 
 
     /**

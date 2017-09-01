@@ -5,7 +5,7 @@
  * $Id$
  */
 
-package com.crm.esb.invoke.xbean;
+package com.crm.esb.invoke.xbeans;
 
   //---------------------------------/
  //- Imported classes and packages -/
@@ -133,7 +133,7 @@ public class BUSI_INFODescriptor extends org.exolab.castor.xml.util.XMLClassDesc
     **/
     public java.lang.Class getJavaClass()
     {
-        return com.crm.esb.invoke.xbean.BUSI_INFO.class;
+        return com.crm.esb.invoke.xbeans.BUSI_INFO.class;
     } //-- java.lang.Class getJavaClass() 
 
     /**

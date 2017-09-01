@@ -113,6 +113,7 @@ public class XStreamUtil {
 	}
 	
 	
+	
 	/**
 	 * 
 	* @Function: getPubInfo
@@ -144,6 +145,18 @@ public class XStreamUtil {
 		return strPubInfo.substring(strPubInfo.indexOf("<PUB_INFO>"));
 	}
 	
+	public static String getPubInfo(String opId,String opOrgId) throws Exception {
+		String strPubInfo = "";
+		PUB_INFO pubInfo = new PUB_INFO();
+		pubInfo.setSYS_OP_ID(ESB_SYS_OP_ID);
+		pubInfo.setSYS_PASSWORD(ESB_SYS_PASSWORD);
+		//需修改成前台传入的用户和机构参数
+		pubInfo.setOP_ID(opId);
+		pubInfo.setOP_ORG_ID(opOrgId );
+		
+		strPubInfo = XmlnodelUtil.getXmlFromBean(pubInfo);
+		return strPubInfo.substring(strPubInfo.indexOf("<PUB_INFO>"));
+	}
 
 	
 }

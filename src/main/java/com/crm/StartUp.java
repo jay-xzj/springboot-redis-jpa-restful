@@ -2,7 +2,6 @@ package com.crm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.crm.cfgdata.base.cache.CfgWsClientCacheService;

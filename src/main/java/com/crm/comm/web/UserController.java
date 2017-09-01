@@ -16,7 +16,7 @@ import com.crm.comm.service.UserService;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/flowDetail")
 public class UserController {
 	
 	@Autowired

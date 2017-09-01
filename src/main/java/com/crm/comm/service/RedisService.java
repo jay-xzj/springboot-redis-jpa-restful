@@ -3,7 +3,7 @@ package com.crm.comm.service;
 
 public interface RedisService {
 
-    public void  set(String key,String value);
+    /*public void  set(String key,String value);
 
     public String get(String key);
 
@@ -13,6 +13,6 @@ public interface RedisService {
 
     public boolean expire(String key, long timeout);
 
-    public void delete(String key);
+    public void delete(String key);*/
 
 }

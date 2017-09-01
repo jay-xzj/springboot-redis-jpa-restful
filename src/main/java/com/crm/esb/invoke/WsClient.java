@@ -59,8 +59,6 @@ public class WsClient
         //log.error((new StringBuilder()).append("ws current capacity timeout:").append(CONCURRENT_ACQUIRE_TIMEOUT_SECONDS).append(" seconds").toString());
     }
 
-  @Autowired
-  private CfgWsClientCacheService cfgWsClientCacheService;
  
   public WsClient(CfgWsClient cfgWsClient)
         throws Exception

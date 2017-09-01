@@ -1,6 +1,6 @@
 package com.crm.comm.web;
 
-import java.util.HashMap;
+/*import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;*/
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
+/*import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.cache.StaticDataCacheService;
 import com.crm.cfgdata.base.domain.BsStaticData;
 import com.crm.cfgdata.base.domain.CfgWsClient;
@@ -26,7 +26,7 @@ import com.crm.comm.domain.User;
 import com.crm.comm.log.LoggerManage;
 import com.crm.comm.repository.SysParamRepository;
 import com.crm.esb.invoke.WsClient;
-import com.crm.esb.invoke.XStreamUtil;
+import com.crm.esb.invoke.XStreamUtil;*/
 
 
 @RestController
@@ -39,7 +39,7 @@ public class HelloWorldController {
     }
 	
 	
-	@RequestMapping("/getUser")
+	/*@RequestMapping("/getUser")
     public User getUser() {
     		User user=new User();
     		user.setUsername("小明");
@@ -128,7 +128,7 @@ public class HelloWorldController {
    
 	@RequestMapping("/getEsb")	
 	public String getEsb(){
-		com.crm.esb.invoke.xbean.BUSI_INFO busiInfo = new com.crm.esb.invoke.xbean.BUSI_INFO();
+		com.crm.esb.invoke.xbeans.BUSI_INFO busiInfo = new com.crm.esb.invoke.xbeans.BUSI_INFO();
 		busiInfo.setBILL_ID("13566369050");
 		String returnValue="";
 		try{
@@ -151,6 +151,6 @@ public class HelloWorldController {
 		}
 		System.out.print(returnValue);
 		return returnValue;
-	}
+	}*/
 
 }

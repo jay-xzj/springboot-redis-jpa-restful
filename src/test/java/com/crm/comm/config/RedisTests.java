@@ -1,6 +1,6 @@
 package com.crm.comm.config;
 
-import java.util.concurrent.TimeUnit;
+/*import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,18 +10,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;*/
 
 import com.crm.comm.domain.User;
 
 import junit.framework.Assert;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@WebAppConfiguration
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@WebAppConfiguration
 public class RedisTests {
 
-    @Autowired
+  /*  @Autowired
     private StringRedisTemplate stringRedisTemplate;
     
 	@Autowired
@@ -50,7 +50,7 @@ public class RedisTests {
         	System.out.println("exists is false");
         }
        // Assert.assertEquals("aa", operations.get("com.neo.f").getUserName());
-    }
+    }*/
 }
 
 

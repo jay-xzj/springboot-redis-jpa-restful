@@ -2,7 +2,12 @@ package com.crm.esb.invoke;
 
 import java.sql.Timestamp;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.domain.CfgWsClient;
+import com.crm.esb.invoke.pojo.RespParam;
 
 //import com.ai.appframe2.common.SessionManager;
 //import com.ai.appframe2.privilege.UserInfoInterface;
@@ -24,10 +29,21 @@ public class SoapUtil {
 *
 * @version: v1.0.0
 * @author: zhouqishan
+* 
 */
-	public static String invokeMethod(CfgWsClient serviceName,Object busiInfo) throws Exception {
+	@Autowired
+	private static  CfgWsClientCacheService cfgWsClientCacheService;
+	
+	public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
 		
-		WsClient client = new WsClient(serviceName);
+		//查询数据库
+		CfgWsClient cfgWsClient = new CfgWsClient();
+		cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
+		if(cfgWsClient==null){
+			
+		}
+				
+		WsClient client = new WsClient(cfgWsClient);
 		String returnValue="";
 		String reqXml = null;
 		
@@ -51,6 +67,14 @@ public class SoapUtil {
 		}
 		return returnValue;
 	}
+	
+	public static RespParam invokeMethodForResp(String serviceName,Object busiInfo) throws Exception {
+		String returnValue = invokeMethod(serviceName,busiInfo);
+		IEsbXmlHelper<RespParam> xmlHelper = new EsbXmlHelper();
+	    RespParam respParam = xmlHelper.parseXml(returnValue, RespParam.class);
+	    return respParam;
+	}
+	
 
 
 }

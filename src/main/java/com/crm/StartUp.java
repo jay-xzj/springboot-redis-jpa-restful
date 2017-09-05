@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.cache.StaticDataCacheService;
 
@@ -28,6 +29,9 @@ public class StartUp implements CommandLineRunner {
         //加载cfgWsClient数据参数
         cfgWsClientCacheService.refreshAll();
         System.out.println("IndexStartupRunner >>>>>>>>>>>>>>>cfgWsClient加载结束 <<<<<<<<<<<<<");
+        
+        //参数设置
+        TypeUtils.compatibleWithJavaBean = true;
         
     }
     

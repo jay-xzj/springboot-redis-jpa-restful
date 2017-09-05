@@ -20,18 +20,17 @@ import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import org.apache.axis.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+
 
 import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.domain.CfgWsClient;
 import com.crm.esb.invoke.Parameter;
 
 
-public class WsClient
-{
+public class WsClient{
 	
+	@Autowired
+	private CfgWsClientCacheService cfgWsClientCacheService;		
 	
     private static final int DEFAULT_TIMEOUT_SECONDS = 3;
     private CfgWsClient objCfgWsClient;
@@ -60,30 +59,32 @@ public class WsClient
     }
 
  
-  public WsClient(CfgWsClient cfgWsClient)
-        throws Exception
-    {
+  public WsClient(String serviceName)throws Exception{
 	    objCfgWsClient = new CfgWsClient();
         service = null;
         //TODO 换成读取新配置
        
-        /*objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_MULTI_MULTIQRY_001");
-        objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_MULTI_MULTIQRY_001");
+        objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_RECORD_TOPN_001");
+        objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_RECORD_TOPN_001");
         objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
         objCfgWsClient.setMethodRetrurnType("http://www.w3.org/2001/XMLSchema;string");
-        objCfgWsClient.setTimeoutSeconds(10L);
+        objCfgWsClient.setTimeoutSeconds(100L);
         objCfgWsClient.setOperationStyle("rpc");
         objCfgWsClient.setOperationUse("encoded");
-        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_MULTI_MULTIQRY_001?wsdl");*/
-        objCfgWsClient.setCfgWsClientCode(cfgWsClient.getCfgWsClientCode());
-        objCfgWsClient.setMethodName(cfgWsClient.getMethodName());
-        objCfgWsClient.setMethodParameter(cfgWsClient.getMethodParameter());
-        objCfgWsClient.setMethodRetrurnType(cfgWsClient.getMethodRetrurnType());
-        objCfgWsClient.setTimeoutSeconds(cfgWsClient.getTimeoutSeconds());
-        objCfgWsClient.setOperationStyle(cfgWsClient.getOperationStyle());
-        objCfgWsClient.setOperationUse(cfgWsClient.getOperationUse());
-        objCfgWsClient.setUrlAddress(cfgWsClient.getUrlAddress());
-        
+        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_RECORD_TOPN_001?wsdl");
+        //连接注入问题，待解决
+        /*CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
+        if(cfgWsClient !=null) {
+        		objCfgWsClient.setCfgWsClientCode(cfgWsClient.getCfgWsClientCode());
+            objCfgWsClient.setMethodName(cfgWsClient.getMethodName());
+            objCfgWsClient.setMethodParameter(cfgWsClient.getMethodParameter());
+            objCfgWsClient.setMethodRetrurnType(cfgWsClient.getMethodRetrurnType());
+            objCfgWsClient.setTimeoutSeconds(cfgWsClient.getTimeoutSeconds());
+            objCfgWsClient.setOperationStyle(cfgWsClient.getOperationStyle());
+            objCfgWsClient.setOperationUse(cfgWsClient.getOperationUse());
+            objCfgWsClient.setUrlAddress(cfgWsClient.getUrlAddress());
+        }*/
+                
         service = new Service();
     }
 

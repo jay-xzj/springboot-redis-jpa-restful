@@ -4,11 +4,11 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import com.crm.comm.Result;
-import com.crm.flowdetail.model.InputAppDayFlowDO;
-import com.crm.flowdetail.model.InputDayAndHourFlowDO;
-import com.crm.flowdetail.model.InputDayFlowDO;
-import com.crm.flowdetail.model.InputQueryFlowDetailDO;
-import com.crm.flowdetail.model.InputVerificationModeDO;
+import com.crm.flowdetail.pojo.InputAppDayFlowDO;
+import com.crm.flowdetail.pojo.InputDayAndHourFlowDO;
+import com.crm.flowdetail.pojo.InputDayFlowDO;
+import com.crm.flowdetail.pojo.InputQueryFlowDetailDO;
+import com.crm.flowdetail.pojo.InputVerificationModeDO;
 
 
 

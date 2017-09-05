@@ -138,8 +138,10 @@ public class XStreamUtil {
 		pubInfo.setSYS_OP_ID(ESB_SYS_OP_ID);
 		pubInfo.setSYS_PASSWORD(ESB_SYS_PASSWORD);
 		//需修改成前台传入的用户和机构参数
-		pubInfo.setOP_ID("10013691");
-		pubInfo.setOP_ORG_ID("15");
+		//pubInfo.setOP_ID("10013691");
+		//pubInfo.setOP_ORG_ID("15");
+		pubInfo.setOP_ID("20076717");
+		pubInfo.setOP_ORG_ID("0");
 		
 		strPubInfo = XmlnodelUtil.getXmlFromBean(pubInfo);
 		return strPubInfo.substring(strPubInfo.indexOf("<PUB_INFO>"));

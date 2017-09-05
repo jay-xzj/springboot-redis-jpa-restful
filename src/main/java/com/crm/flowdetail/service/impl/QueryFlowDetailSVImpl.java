@@ -19,12 +19,9 @@ import com.crm.comm.cfgdata.base.util.DateUtil;
 import com.crm.comm.cfgdata.base.util.GetterUtil;
 import com.crm.comm.cfgdata.base.util.StringUtil;
 import com.crm.flowdetai.service.IQueryFlowDetailSV;
-import com.crm.flowdetail.model.InputAppDayFlowDO;
-import com.crm.flowdetail.model.InputQueryFlowDetailDO;
-import com.crm.flowdetail.model.OutputNewDayFlowDO;
-import com.crm.flowdetail.model.OutputNewDayFlowListDO;
-import com.crm.flowdetail.model.OutputQueryFlowDetailDO;
-
+import com.crm.flowdetail.pojo.InputAppDayFlowDO;
+import com.crm.flowdetail.pojo.OutputNewDayFlowDO;
+import com.crm.flowdetail.pojo.OutputNewDayFlowListDO;
 import com.crm.comm.exception.ServiceException;
 import com.crm.esb.invoke.SoapUtil;
 import com.crm.esb.invoke.intercode.ESBInterFaceCode;
@@ -110,7 +107,6 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			String queryDate = inputParam.getQUERY_DATE();//查询年月
 			String billId = inputParam.getBILL_ID();//号码
 			String flowTotal = "";
-	
 			
 			if(StringUtil.isEmpty(billId)){
 				throw new ServiceException(ResultMsg.SOS00000001.getValue());
@@ -149,13 +145,9 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 
 			}
 			//busiInfo.setTOP_AMOUNT("5");
-			RespParam respParam =SoapUtil.invokeMethodForResp(serviceName,busiInfo);
-			
-			if(respParam.isSuccess()){
-				
-				List<Map<String, Object>> flowAppList = CollectionsUtil
-						.getListBusiInfo(respParam.getBusiInfo(), "APP_FLOW_LIST",
-								"APP_FLOW_INFO");
+			RespParam respParam =SoapUtil.invokeMethodForResp(serviceName,busiInfo);		
+			if(respParam.isSuccess()){						
+				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "APP_FLOW_LIST","APP_FLOW_INFO");
 				if(null != flowAppList && flowAppList.size()>0){
 					OutputNewDayFlowDO dayFlow = null;
 					for(Map map:flowAppList){

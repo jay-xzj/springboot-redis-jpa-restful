@@ -16,8 +16,8 @@ import com.crm.comm.Result;
 import com.crm.comm.domain.User;
 import com.crm.comm.repository.UserRepository;
 import com.crm.comm.service.UserService;
-import com.crm.flowdetail.model.InputAppDayFlowDO;
-import com.crm.flowdetail.model.InputQueryFlowDetailDO;
+import com.crm.flowdetail.pojo.InputAppDayFlowDO;
+import com.crm.flowdetail.pojo.InputQueryFlowDetailDO;
 import com.crm.flowdetail.service.impl.QueryFlowDetailSVImpl;
 
 
@@ -28,7 +28,7 @@ public class FlowDetailController {
 	@Autowired
 	QueryFlowDetailSVImpl queryFlowDetailSVImpl;
 		
-	@PostMapping("/getTopApp")
+	@PostMapping("/QueryTopApp")
     public Result getTopApp(@RequestBody InputAppDayFlowDO req) throws Exception{
     		Result result = queryFlowDetailSVImpl.queryAppFlow(req);
     		return result;

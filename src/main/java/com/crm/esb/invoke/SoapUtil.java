@@ -2,11 +2,15 @@ package com.crm.esb.invoke;
 
 import java.sql.Timestamp;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.domain.CfgWsClient;
+import com.crm.cfgdata.base.repository.CfgWsClientRepository;
+import com.crm.comm.exception.ServiceException;
 import com.crm.esb.invoke.pojo.RespParam;
 
 //import com.ai.appframe2.common.SessionManager;
@@ -15,7 +19,7 @@ import com.crm.esb.invoke.pojo.RespParam;
 //import com.asiainfo.aiccsp2.common.util.ServiceLogDeal;
 
 
-
+@Service
 public class SoapUtil { 
 /**
 * 
@@ -31,19 +35,26 @@ public class SoapUtil {
 * @author: zhouqishan
 * 
 */
+	/*无法注入静态类，问题待解决*/
 	@Autowired
-	private static  CfgWsClientCacheService cfgWsClientCacheService;
+	private CfgWsClientCacheService cfgWsClientCacheService;	
+	
+	@Autowired
+    private  CfgWsClientRepository cfgWsClientRepository;
 	
 	public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
-		
-		//查询数据库
-		CfgWsClient cfgWsClient = new CfgWsClient();
-		cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
-		if(cfgWsClient==null){
-			
-		}
 				
-		WsClient client = new WsClient(cfgWsClient);
+		//查询数据库
+		//cfgWsClientRepository.findByCfgWsClientCode();
+
+		//CfgWsClient cfgWsClient = new CfgWsClient();
+		//cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
+		
+				
+		WsClient client = new WsClient(serviceName);
+		if(client==null){
+			throw new ServiceException(serviceName+"接口未配置！");
+		}
 		String returnValue="";
 		String reqXml = null;
 		

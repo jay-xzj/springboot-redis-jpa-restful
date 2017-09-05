@@ -7,14 +7,15 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.crm.cfgdata.base.domain.CfgWsClient;
 import com.crm.cfgdata.base.repository.CfgWsClientRepository;
 import com.crm.comm.config.CacheConfig;
 
 
-
 @Component
+@Service
 public class CfgWsClientCacheService implements CacheConfig {
 	
 	private HashMap<String,Object>maps = new HashMap<String,Object>();

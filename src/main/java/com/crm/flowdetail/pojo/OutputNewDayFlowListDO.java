@@ -1,4 +1,4 @@
-package com.crm.flowdetail.model;
+package com.crm.flowdetail.pojo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +10,6 @@ public class OutputNewDayFlowListDO implements Serializable{
 	private List<OutputNewDayFlowDO> FLOW_APPLY_LIST;//应用使用流量TOP5
 	private List<OutPutFlowMostInfoDO> FLOW_MOST_LIST;//柱状图左侧阈值
 	private OutputFlowTotalDO FLOW_INFO;
-	
 	
 	public List<OutputNewDayFlowDO> getFLOW_DAY_LIST() {
 		return FLOW_DAY_LIST;

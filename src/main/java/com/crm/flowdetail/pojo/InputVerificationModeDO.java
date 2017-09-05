@@ -1,4 +1,4 @@
-package com.crm.flowdetail.model;
+package com.crm.flowdetail.pojo;
 
 import com.crm.cfgdata.base.domain.InputCommonData;
 

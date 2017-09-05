@@ -1,10 +1,9 @@
-package com.crm.flowdetail.model;
+package com.crm.flowdetail.pojo;
 
 import java.io.Serializable;
 
 import com.crm.cfgdata.base.domain.InputCommonData;
-
-@SuppressWarnings("serial")
+//@SuppressWarnings("serial")
 public class InputAppDayFlowDO extends InputCommonData implements Serializable{
 	
 	private String BILL_ID;

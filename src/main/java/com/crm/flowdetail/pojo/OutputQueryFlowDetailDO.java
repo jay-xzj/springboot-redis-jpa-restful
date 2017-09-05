@@ -1,4 +1,4 @@
-package com.crm.flowdetail.model;
+package com.crm.flowdetail.pojo;
 
 import java.io.Serializable;
 import java.util.List;

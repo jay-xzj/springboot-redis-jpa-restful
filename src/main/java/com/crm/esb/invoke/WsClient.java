@@ -64,14 +64,47 @@ public class WsClient{
         service = null;
         //TODO 换成读取新配置
        
-        objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_RECORD_TOPN_001");
+        /*objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_RECORD_TOPN_001");
         objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_RECORD_TOPN_001");
         objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
         objCfgWsClient.setMethodRetrurnType("http://www.w3.org/2001/XMLSchema;string");
         objCfgWsClient.setTimeoutSeconds(100L);
         objCfgWsClient.setOperationStyle("rpc");
         objCfgWsClient.setOperationUse("encoded");
-        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_RECORD_TOPN_001?wsdl");
+        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_RECORD_TOPN_001?wsdl");*/
+        
+        /*objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_RECORD_FLOW_002");
+        objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_RECORD_FLOW_002");
+        objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
+        objCfgWsClient.setMethodRetrurnType("http://www.w3.org/2001/XMLSchema;string");
+        objCfgWsClient.setTimeoutSeconds(100L);
+        objCfgWsClient.setOperationStyle("rpc");
+        objCfgWsClient.setOperationUse("encoded");
+        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_RECORD_FLOW_002?wsdl");*/
+        
+        
+        if(serviceName.equals("ESB_CS_QRY_RECORD_FLOW_001")) {
+	        objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_RECORD_FLOW_001");
+	        objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_RECORD_FLOW_001");
+	        objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
+	        objCfgWsClient.setMethodRetrurnType("http://www.w3.org/2001/XMLSchema;string");
+	        objCfgWsClient.setTimeoutSeconds(100L);
+	        objCfgWsClient.setOperationStyle("rpc");
+	        objCfgWsClient.setOperationUse("encoded");
+	        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_RECORD_FLOW_001?wsdl");
+        }
+        else if(serviceName.equals("ESB_CS_QRY_USED_FREERES_001")) {
+	        objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_USED_FREERES_001");
+	        objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_USED_FREERES_001");
+	        objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
+	        objCfgWsClient.setMethodRetrurnType("http://www.w3.org/2001/XMLSchema;string");
+	        objCfgWsClient.setTimeoutSeconds(100L);
+	        objCfgWsClient.setOperationStyle("rpc");
+	        objCfgWsClient.setOperationUse("encoded");
+	        objCfgWsClient.setUrlAddress("http://20.26.3.195:8104/zjboss/proxy/ESB_CS_QRY_USED_FREERES_001?wsdl");
+        }
+        
+        
         //连接注入问题，待解决
         /*CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
         if(cfgWsClient !=null) {

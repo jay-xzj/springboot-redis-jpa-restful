@@ -35,14 +35,8 @@ public class SoapUtil {
 * @author: zhouqishan
 * 
 */
-	/*无法注入静态类，问题待解决*/
-	@Autowired
-	private CfgWsClientCacheService cfgWsClientCacheService;	
 	
-	@Autowired
-    private  CfgWsClientRepository cfgWsClientRepository;
-	
-	public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
+public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
 				
 		//查询数据库
 		//cfgWsClientRepository.findByCfgWsClientCode();
@@ -52,9 +46,7 @@ public class SoapUtil {
 		
 				
 		WsClient client = new WsClient(serviceName);
-		if(client==null){
-			throw new ServiceException(serviceName+"接口未配置！");
-		}
+		
 		String returnValue="";
 		String reqXml = null;
 		

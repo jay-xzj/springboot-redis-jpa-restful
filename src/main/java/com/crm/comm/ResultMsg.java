@@ -6,7 +6,8 @@ package com.crm.comm;
 public enum ResultMsg {
     
 	SOS00000001("手机号码不能为空"),
-	SOS00000002("查询时间不能为空")
+	SOS00000002("查询时间不能为空"),
+	SOS00000003("查询时间格式错误")
 	;
 
     public String msg;

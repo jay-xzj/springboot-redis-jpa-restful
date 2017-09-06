@@ -7,7 +7,7 @@ import com.crm.cfgdata.base.domain.InputCommonData;
 @SuppressWarnings("serial")
 public class InputDayAndHourFlowDO extends InputCommonData implements Serializable{
 	private String BILL_ID;
-	private String QRY_DATE;
+	private String QUERY_DATE;
 	private String APP_CODE;
 	private String SUM_TYPE;
 	public String getBILL_ID() {
@@ -16,11 +16,11 @@ public class InputDayAndHourFlowDO extends InputCommonData implements Serializab
 	public void setBILL_ID(String bILL_ID) {
 		BILL_ID = bILL_ID;
 	}
-	public String getQRY_DATE() {
-		return QRY_DATE;
+	public String getQUERY_DATE() {
+		return QUERY_DATE;
 	}
-	public void setQRY_DATE(String qRY_DATE) {
-		QRY_DATE = qRY_DATE;
+	public void setQUERY_DATE(String qRY_DATE) {
+		QUERY_DATE = qRY_DATE;
 	}
 	public String getAPP_CODE() {
 		return APP_CODE;

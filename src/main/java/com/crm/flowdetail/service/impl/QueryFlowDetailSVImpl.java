@@ -97,10 +97,12 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			if(respParam.isSuccess()){				
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FLOW_DAY_LIST","FLOW_DAY_INFO");
 				if(null != flowAppList && flowAppList.size()>0){
+					Integer flowTotal =0;
+					Integer amount =0;
 					OutputDayAndHourFlowDO dayFlow = null;
 					for(Map map:flowAppList){
 						dayFlow = new OutputDayAndHourFlowDO();
-						//dayFlow.setUSED_DATE(GetterUtil.getString(map.get("DAY")));
+						amount=amount+1;
 						if(sumType.equals("1")){
 							dayFlow.setUSED_DATE(GetterUtil.getString(map.get("DAY")).substring(0, 10));
 						}else{
@@ -108,13 +110,17 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 						}
 						String flow = GetterUtil.getString(map.get("FLOW_DAY"));//流量大小，单位为KB
 						if(StringUtil.isEmpty(flow)){
-							dayFlow.setFLOW("0");
+							dayFlow.setFLOW(0);
 						}else{
-							String amount = String.valueOf(df.format(Double.parseDouble(flow)/1024));//大小单位为MB
-							dayFlow.setFLOW(amount);
+							Integer flowInt = Integer.valueOf(df.format(Double.parseDouble(flow)/1024));//大小单位为MB
+							dayFlow.setFLOW(flowInt);
+							flowTotal +=flowInt;
 						}					
 						outPutList.add(dayFlow);
 					}
+					
+					output.setAMOUNT(amount);
+					output.setFLOW_TOTAL(flowTotal);
 					
 					//排个序
 					Comparator com = new Comparator(){
@@ -182,13 +188,11 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			busiInfo.setBILL_ID(billId);
 			busiInfo.setSTART_DATE(startDate);
 			busiInfo.setEND_DATE(endDate);
-			if(StringUtil.isEmpty(inputParam.getTOP_AMOUNT())){
+			if(inputParam.getTOP_AMOUNT()==null||StringUtil.isEmpty(inputParam.getTOP_AMOUNT().toString())){
 				busiInfo.setTOP_AMOUNT("10");
 			}else{
-				busiInfo.setTOP_AMOUNT(inputParam.getTOP_AMOUNT());
-
+				busiInfo.setTOP_AMOUNT(inputParam.getTOP_AMOUNT().toString());
 			}
-			//busiInfo.setTOP_AMOUNT("5");
 			RespParam respParam =SoapUtil.invokeMethodForResp(cfgWsClient,busiInfo);		
 			if(respParam.isSuccess()){						
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "APP_FLOW_LIST","APP_FLOW_INFO");
@@ -198,26 +202,22 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 						dayFlow = new OutputNewDayFlowDO();
 						//dayFlow.setIS_SHOW(GetterUtil.getString(map.get("APP_CODE")));//应用编号
 						dayFlow.setAPP_CODE(GetterUtil.getString(map.get("APP_CODE")));//应用编号
-						dayFlow.setNAME(GetterUtil.getString(map.get("APP_NAME")));//应用名称
-						String flow = GetterUtil.getString(map.get("APP_FLOW"));//流量大小，单位为KB
-						String percent = GetterUtil.getString(map.get("APP_PERCENT"));//百分比
+						dayFlow.setAPP_NAME(GetterUtil.getString(map.get("APP_NAME")));//应用名称
+						String flow = GetterUtil.getString(map.get("APP_FLOW"));//流量大小，单位为KB						
 						if(StringUtil.isEmpty(flow)){
-							dayFlow.setPERCENT("0");
-							dayFlow.setAMOUNT("0.00");
+							dayFlow.setAPP_FLOW(0);
 						}else{
-							String amount = String.valueOf(df.format(Double.parseDouble(flow)/1024));//大小单位为MB
-							dayFlow.setPERCENT(percent);
-							dayFlow.setAMOUNT(amount);
-						}
-						
+							Integer amount = Integer.valueOf(df.format(Double.parseDouble(flow)/1024));//大小单位为MB
+							dayFlow.setAPP_FLOW(amount);
+						}						
 						outPutList.add(dayFlow);
 					}
 					
 					//排个序
 					Comparator com = new Comparator(){
 						public int compare(Object o1, Object o2) {
-							double price1 = Double.parseDouble(((OutputNewDayFlowDO)o1).getAMOUNT().toString());				
-							double price2 = Double.parseDouble(((OutputNewDayFlowDO)o2).getAMOUNT().toString());
+							double price1 = Double.parseDouble(((OutputNewDayFlowDO)o1).getAPP_FLOW().toString());				
+							double price2 = Double.parseDouble(((OutputNewDayFlowDO)o2).getAPP_FLOW().toString());
 							if(price1 > price2){
 								return -1;
 							}else if(price1 == price2){
@@ -227,8 +227,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 							}
 						}
 					};
-					Collections.sort(outPutList,com);
-					
+					Collections.sort(outPutList,com);					
 					outPut.setFLOW_APPLY_LIST(outPutList);
 				}
 			}else{
@@ -282,16 +281,16 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 				String payFlow = respParam.getBusiInfo().get("PAY_FLOW")==null?"0":respParam.getBusiInfo().get("PAY_FLOW").toString();
 				
 				//设置总流量和套餐内流量		
-				String freeAmount = String.valueOf(df.format(Double.parseDouble(freeFlow)/1024));//大小单位为MB
-				String payAmount = String.valueOf(df.format(Double.parseDouble(payFlow)/1024));//大小单位为MB
-				String totalAmount =String.valueOf(df.format(Double.parseDouble(flowTotal)/1024));//大小单位为MB
+				Integer freeAmount = Integer.valueOf(df.format(Double.parseDouble(freeFlow)/1024));//大小单位为MB
+				Integer payAmount = Integer.valueOf(df.format(Double.parseDouble(payFlow)/1024));//大小单位为MB
+				Integer totalAmount =Integer.valueOf(df.format(Double.parseDouble(flowTotal)/1024));//大小单位为MB
 				outPut.setFLOW_TOTAL(totalAmount);
 				outPut.setPAY_FLOW(payAmount);
 				outPut.setFREE_FLOW(freeAmount);
 
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FLOW_DAY_LIST","FLOW_DAY_INFO");
 				if(null != flowAppList && flowAppList.size()>0){
-	
+					outPut.setAMOUNT(flowAppList.size());
 					//设置每日流量，先按天数排序，由小到大
 					Comparator com1 = new Comparator(){
 						public int compare(Object o1, Object o2) {
@@ -378,9 +377,9 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			String payFlow = respParam.getBusiInfo().get("PAY_FLOW")==null?"0":respParam.getBusiInfo().get("PAY_FLOW").toString();
 			
 			//设置总流量和套餐内流量		//大小单位为MB		
-			outPut.setUSED_FLOW(String.valueOf(df.format(Double.parseDouble(flowTotal)/1024)));
-			outPut.setPAY_FLOW(String.valueOf(df.format(Double.parseDouble(payFlow)/1024)));
-			outPut.setFREE_FLOW(String.valueOf(df.format(Double.parseDouble(freeFlow)/1024)));
+			outPut.setUSED_FLOW(Integer.valueOf(df.format(Double.parseDouble(flowTotal)/1024)));
+			outPut.setPAY_FLOW(Integer.valueOf(df.format(Double.parseDouble(payFlow)/1024)));
+			outPut.setFREE_FLOW(Integer.valueOf(df.format(Double.parseDouble(freeFlow)/1024)));
 		}
 		else{
 			throw new ServiceException(null!=respParam.getReturnMsg()?respParam.getReturnMsg():"系统异常，请联系系统管理员！");
@@ -434,13 +433,13 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 						}
 					}
 				}        		
-	        		outPut.setALL_FLOW(String.valueOf(df.format(maxDataFlow/1024)));
+	        		outPut.setALL_FLOW(Integer.valueOf(df.format(maxDataFlow/1024)));
 			}	   
 	        	else {
-	        		throw new ServiceException("ESB查询结果列表为空");
+	        		throw new ServiceException(null!=respParam2.getReturnMsg()?respParam2.getReturnMsg():"系统异常，请联系系统管理员!ESB查询结果列表为空!");
 	        	}
         }else {
-			throw new ServiceException(null!=respParam.getReturnMsg()?respParam.getReturnMsg():"系统异常，请联系系统管理员！");
+			throw new ServiceException(null!=respParam2.getReturnMsg()?respParam2.getReturnMsg():"系统异常，请联系系统管理员！");
         }
 		//查询总流量		
 		return ResultGenerator.genSuccessResult(outPut);	

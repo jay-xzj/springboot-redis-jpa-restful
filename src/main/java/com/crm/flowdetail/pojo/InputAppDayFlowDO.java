@@ -10,7 +10,7 @@ public class InputAppDayFlowDO extends InputCommonData implements Serializable{
 	private String QUERY_DATE;
 	private String FLOW_TOTAL;
 	private String SUM_TYPE;
-	private String TOP_AMOUNT;
+	private Integer TOP_AMOUNT;
 	private String APP_CODE;
 	private String COUNT;
 	public String getCOUNT() {
@@ -49,10 +49,10 @@ public class InputAppDayFlowDO extends InputCommonData implements Serializable{
 	public void setSUM_TYPE(String sUM_TYPE) {
 		SUM_TYPE = sUM_TYPE;
 	}
-	public String getTOP_AMOUNT() {
+	public Integer getTOP_AMOUNT() {
 		return TOP_AMOUNT;
 	}
-	public void setTOP_AMOUNT(String tOP_AMOUNT) {
+	public void setTOP_AMOUNT(Integer tOP_AMOUNT) {
 		TOP_AMOUNT = tOP_AMOUNT;
 	}
 	

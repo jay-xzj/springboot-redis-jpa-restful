@@ -6,17 +6,17 @@ import java.io.Serializable;
 public class OutputDayAndHourFlowDO  implements Serializable{
 
 	private String USED_DATE;
-	private String FLOW;
+	private Integer FLOW;
 	public String getUSED_DATE() {
 		return USED_DATE;
 	}
 	public void setUSED_DATE(String uSED_DATE) {
 		USED_DATE = uSED_DATE;
 	}
-	public String getFLOW() {
+	public Integer getFLOW() {
 		return FLOW;
 	}
-	public void setFLOW(String fLOW) {
+	public void setFLOW(Integer fLOW) {
 		FLOW = fLOW;
 	}
 

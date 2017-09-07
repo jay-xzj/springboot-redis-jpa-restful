@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.crm.cfgdata.base.constant.CustomerConst.CustConst;
+import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.cache.StaticDataCacheService;
 import com.crm.cfgdata.base.domain.BsStaticData;
+import com.crm.cfgdata.base.domain.CfgWsClient;
 import com.crm.comm.Result;
 import com.crm.comm.ResultMsg;
 import com.crm.comm.cfgdata.base.util.CollectionsUtil;
@@ -46,6 +48,9 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 	
 	@Autowired
 	private StaticDataCacheService staticDataCacheService;
+	
+	@Autowired
+	private CfgWsClientCacheService cfgWsClientCacheService;
 
 	//查询应用在各日期和小时分布情况（4003）
 	public Result queryAppFlow(InputDayAndHourFlowDO inputParam)throws Exception {
@@ -81,12 +86,13 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 					
 			String serviceName = ESBInterFaceCode.SRV_ESB_CS_QRY_RECORD_FLOW_002;
 	        //String methodName = ESBInterFaceCode.MN_ESB_CS_QRY_RECORD_FLOW_002;
+			CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
 	        com.crm.flowdetail.xbeans.esb_cs_qry_record_flow_002.BUSI_INFO busiInfo = new com.crm.flowdetail.xbeans.esb_cs_qry_record_flow_002.BUSI_INFO();
 			busiInfo.setBILL_ID(billId);
 			busiInfo.setAPP_CODE(appCode);
 			busiInfo.setSUM_TYPE(sumType);
 			busiInfo.setQUERY_DATE(queryDate);
-			RespParam respParam = SoapUtil.invokeMethodForResp(serviceName, busiInfo);
+			RespParam respParam = SoapUtil.invokeMethodForResp(cfgWsClient, busiInfo);
 			
 			if(respParam.isSuccess()){				
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FLOW_DAY_LIST","FLOW_DAY_INFO");
@@ -171,6 +177,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			
 			String serviceName = ESBInterFaceCode.SRV_ESB_CS_QRY_RECORD_TOPN_001;
 	        //String methodName = ESBInterFaceCode.MN_ESB_CS_QRY_RECORD_TOPN_001;
+			CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
 	        com.crm.flowdetail.xbeans.esb_cs_qry_record_topn_001.BUSI_INFO busiInfo = new com.crm.flowdetail.xbeans.esb_cs_qry_record_topn_001.BUSI_INFO();
 			busiInfo.setBILL_ID(billId);
 			busiInfo.setSTART_DATE(startDate);
@@ -182,7 +189,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 
 			}
 			//busiInfo.setTOP_AMOUNT("5");
-			RespParam respParam =SoapUtil.invokeMethodForResp(serviceName,busiInfo);		
+			RespParam respParam =SoapUtil.invokeMethodForResp(cfgWsClient,busiInfo);		
 			if(respParam.isSuccess()){						
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "APP_FLOW_LIST","APP_FLOW_INFO");
 				if(null != flowAppList && flowAppList.size()>0){
@@ -260,13 +267,14 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			}
 	
 			String serviceName = ESBInterFaceCode.SRV_ESB_CS_QRY_RECORD_FLOW_001;
-	        String methodName = ESBInterFaceCode.MN_ESB_CS_QRY_RECORD_FLOW_001;
+	        //String methodName = ESBInterFaceCode.MN_ESB_CS_QRY_RECORD_FLOW_001;
+			CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
 			com.crm.flowdetail.xbeans.esb_cs_qry_record_flow_001.BUSI_INFO busiInfo = new com.crm.flowdetail.xbeans.esb_cs_qry_record_flow_001.BUSI_INFO();
 			busiInfo.setSUM_TYPE(sumType);
 			busiInfo.setBILL_ID(billId);
 			busiInfo.setQUERY_DATE(queryDate);
 			
-			RespParam respParam = SoapUtil.invokeMethodForResp(serviceName, busiInfo);
+			RespParam respParam = SoapUtil.invokeMethodForResp(cfgWsClient, busiInfo);
 			
 			if(respParam.isSuccess()){
 				String flowTotal = respParam.getBusiInfo().get("FLOW_TOTAL")==null?"0":respParam.getBusiInfo().get("FLOW_TOTAL").toString();
@@ -312,7 +320,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 						}else{
 							dayFlow.setDAY(GetterUtil.getString(map.get("DAY")).substring(0, 8));
 						}
-						dayFlow.setDAY_FLOW(String.valueOf(df.format(Double.parseDouble(amount)/1024)));
+						dayFlow.setFLOW_DAY(Integer.parseInt(String.valueOf(df.format(Double.parseDouble(amount)/1024))));
 						flowDayList.add(dayFlow);
 					}
 				}
@@ -356,12 +364,13 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 
 		String serviceName = ESBInterFaceCode.SRV_ESB_CS_QRY_RECORD_FLOW_001;
         //String methodName = ESBInterFaceCode.MN_ESB_CS_QRY_RECORD_FLOW_001;
+		CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
 		com.crm.flowdetail.xbeans.esb_cs_qry_record_flow_001.BUSI_INFO busiInfo = new com.crm.flowdetail.xbeans.esb_cs_qry_record_flow_001.BUSI_INFO();
 		busiInfo.setSUM_TYPE(sumType);
 		busiInfo.setBILL_ID(billId);
 		busiInfo.setQUERY_DATE(queryDate);
 		
-		RespParam respParam = SoapUtil.invokeMethodForResp(serviceName, busiInfo);
+		RespParam respParam = SoapUtil.invokeMethodForResp(cfgWsClient, busiInfo);
 		
 		if(respParam.isSuccess()){
 			String flowTotal = respParam.getBusiInfo().get("FLOW_TOTAL")==null?"0":respParam.getBusiInfo().get("FLOW_TOTAL").toString();
@@ -386,13 +395,13 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 		//查询用户订购的流量
 		String serviceName2 = ESBInterFaceCode.SRV_ESB_CS_QRY_USED_FREERES_001;
         //String methodName2 = ESBInterFaceCode.MN_ESB_CS_QRY_USED_FREERES_001;
-        
+		CfgWsClient cfgWsClient2 =cfgWsClientCacheService.getObj(serviceName2); 
         com.crm.flowdetail.xbeans.esb_cs_qry_used_freeres_001.BUSI_INFO busiInfo2 = 
         		new com.crm.flowdetail.xbeans.esb_cs_qry_used_freeres_001.BUSI_INFO();
         busiInfo2.setBILL_ID(billId);        
         busiInfo2.setQUERY_MONTH(queryMonth);
         busiInfo2.setRELAT_TYPE("1");//个人免费资源
-        RespParam respParam2 = SoapUtil.invokeMethodForResp(serviceName2,busiInfo2);
+        RespParam respParam2 = SoapUtil.invokeMethodForResp(cfgWsClient2,busiInfo2);
         
         //double flowUsage = 0;
 		double maxDataFlow=0;

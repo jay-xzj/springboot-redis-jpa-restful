@@ -6,6 +6,13 @@ import java.io.Serializable;
 public class OutputDayFlowDO implements Serializable{
 
 	private String DAY;
+	private int FLOW_DAY;
+	public int getFLOW_DAY() {
+		return FLOW_DAY;
+	}
+	public void setFLOW_DAY(int fLOW_DAY) {
+		FLOW_DAY = fLOW_DAY;
+	}
 	public String getDAY() {
 		return DAY;
 	}

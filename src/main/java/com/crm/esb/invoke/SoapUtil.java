@@ -70,9 +70,52 @@ public static String invokeMethod(String serviceName,Object busiInfo) throws Exc
 		}
 		return returnValue;
 	}
+
+public static String invokeMethod(CfgWsClient cfgWsClient,Object busiInfo) throws Exception {
+	
+	//查询数据库
+	//cfgWsClientRepository.findByCfgWsClientCode();
+
+	//CfgWsClient cfgWsClient = new CfgWsClient();
+	//cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
+	
+			
+	WsClient client = new WsClient(cfgWsClient);
+	
+	String returnValue="";
+	String reqXml = null;
+	
+	//TODO LOG相关，时间戳
+	//Timestamp startTime = ServiceManager.getIdGenerator().getSysDate();
+	//long beginTime = System.currentTimeMillis();
+	try {
+		reqXml = XStreamUtil.getEsbReqXml(busiInfo);
+		returnValue = (String)client.invoke(new Object[] {reqXml});
+		System.out.println(returnValue);
+	} catch (Exception e) {
+		returnValue=e.getMessage();
+		throw new Exception(e);
+	}finally{
+		try {
+			//TODO
+			//记录调用日志
+         }catch (Exception e2) {
+        	//TODO
+				//记录错误日志
+         }
+	}
+	return returnValue;
+}
 	
 	public static RespParam invokeMethodForResp(String serviceName,Object busiInfo) throws Exception {
 		String returnValue = invokeMethod(serviceName,busiInfo);
+		IEsbXmlHelper<RespParam> xmlHelper = new EsbXmlHelper();
+	    RespParam respParam = xmlHelper.parseXml(returnValue, RespParam.class);
+	    return respParam;
+	}
+	
+	public static RespParam invokeMethodForResp(CfgWsClient cfgWsClient,Object busiInfo) throws Exception {
+		String returnValue = invokeMethod(cfgWsClient,busiInfo);
 		IEsbXmlHelper<RespParam> xmlHelper = new EsbXmlHelper();
 	    RespParam respParam = xmlHelper.parseXml(returnValue, RespParam.class);
 	    return respParam;

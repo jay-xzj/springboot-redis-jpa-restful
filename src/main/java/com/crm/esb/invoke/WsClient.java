@@ -24,8 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.crm.cfgdata.base.cache.CfgWsClientCacheService;
 import com.crm.cfgdata.base.domain.CfgWsClient;
+import com.crm.comm.exception.ServiceException;
 import com.crm.esb.invoke.Parameter;
-
 
 public class WsClient{
 	
@@ -63,7 +63,7 @@ public class WsClient{
 	    objCfgWsClient = new CfgWsClient();
         service = null;
         //TODO 换成读取新配置
-       
+
         /*objCfgWsClient.setCfgWsClientCode("ESB_CS_QRY_RECORD_TOPN_001");
         objCfgWsClient.setMethodName("http://esb-ownchannel.yw.zj.chinamobile.com;ESB_CS_QRY_RECORD_TOPN_001");
         objCfgWsClient.setMethodParameter("[{'reqXml','http://www.w3.org/2001/XMLSchema;string','IN'}]");
@@ -120,6 +120,27 @@ public class WsClient{
                 
         service = new Service();
     }
+  
+  
+ public WsClient(CfgWsClient cfgWsClient)throws Exception{
+	  objCfgWsClient = new CfgWsClient();
+      service = null;
+      if(cfgWsClient !=null) {
+      	  objCfgWsClient.setCfgWsClientCode(cfgWsClient.getCfgWsClientCode());
+          objCfgWsClient.setMethodName(cfgWsClient.getMethodName());
+          objCfgWsClient.setMethodParameter(cfgWsClient.getMethodParameter());
+          objCfgWsClient.setMethodRetrurnType(cfgWsClient.getMethodRetrurnType());
+          objCfgWsClient.setTimeoutSeconds(cfgWsClient.getTimeoutSeconds());
+          objCfgWsClient.setOperationStyle(cfgWsClient.getOperationStyle());
+          objCfgWsClient.setOperationUse(cfgWsClient.getOperationUse());
+          objCfgWsClient.setUrlAddress(cfgWsClient.getUrlAddress());
+      }
+      else {
+    	  	  throw new ServiceException("CfgWsClient未配置");
+      }
+              
+      service = new Service();
+  }
 
     public Object invoke(Object params[])
         throws Exception

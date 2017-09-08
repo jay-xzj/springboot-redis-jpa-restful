@@ -8,10 +8,10 @@ public class OutputDayFlowDO implements Serializable{
 	private String DAY;
 	private Integer FLOW_DAY;
 	
-	public int getFLOW_DAY() {
+	public Integer getFLOW_DAY() {
 		return FLOW_DAY;
 	}
-	public void setFLOW_DAY(int fLOW_DAY) {
+	public void setFLOW_DAY(Integer fLOW_DAY) {
 		FLOW_DAY = fLOW_DAY;
 	}
 	public String getDAY() {

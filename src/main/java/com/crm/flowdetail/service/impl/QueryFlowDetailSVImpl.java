@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 				queryDate+="01";
 				sumType = "2";				
 			}else {
-				sumType = "1";
+				sumType = "1";//查小时
 			}
 			
 			if(queryDate.length()>8){//查询按天，查小时
@@ -97,12 +98,15 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			if(respParam.isSuccess()){				
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FLOW_DAY_LIST","FLOW_DAY_INFO");
 				if(null != flowAppList && flowAppList.size()>0){
-					Integer flowTotal =0;
-					Integer amount =0;
+					Integer flowTotal =0;//各个flow相加
+					Integer amount =flowAppList.size();//amount默认为list的size
 					OutputDayAndHourFlowDO dayFlow = null;
+					Integer count=0;
+					Date date =new Date();
+					String dateString =DateUtil.date2String(date, "yyyyMMdd");
+					
 					for(Map map:flowAppList){
 						dayFlow = new OutputDayAndHourFlowDO();
-						amount=amount+1;
 						if(sumType.equals("1")){
 							dayFlow.setUSED_DATE(GetterUtil.getString(map.get("DAY")).substring(0, 10));
 						}else{
@@ -111,16 +115,24 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 						String flow = GetterUtil.getString(map.get("FLOW_DAY"));//流量大小，单位为KB
 						if(StringUtil.isEmpty(flow)){
 							dayFlow.setFLOW(0);
+							dayFlow.setFLOW(null);
 						}else{
 							Integer flowInt = Integer.valueOf(df.format(Double.parseDouble(flow)/1024));//大小单位为MB
 							dayFlow.setFLOW(flowInt);
 							flowTotal +=flowInt;
-						}					
+						}
+						
+						
+						if(sumType.equals("2")&&dayFlow.getFLOW()==0&&Integer.valueOf(dayFlow.getUSED_DATE()).intValue()>=Integer.valueOf(dateString).intValue()) {
+							count =count+1;
+							dayFlow.setFLOW(null);							
+						}
+						
 						outPutList.add(dayFlow);
 					}
-					
-					output.setAMOUNT(amount);
+
 					output.setFLOW_TOTAL(flowTotal);
+					output.setAMOUNT(amount-count);
 					
 					//排个序
 					Comparator com = new Comparator(){
@@ -307,9 +319,11 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 					};
 					Collections.sort(flowAppList,com1);
 					
-
 					OutputDayFlowDO dayFlow = null;
-					int listSize = flowAppList.size();
+					
+					Integer count=0;
+					Date date =new Date();
+					String dateString =DateUtil.date2String(date, "yyyyMMdd");
 					
 					for(Map map:flowAppList){
 						String amount = GetterUtil.getString(map.get("FLOW_DAY")) != null?GetterUtil.getString(map.get("FLOW_DAY")):"0";
@@ -320,6 +334,13 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 							dayFlow.setDAY(GetterUtil.getString(map.get("DAY")).substring(0, 8));
 						}
 						dayFlow.setFLOW_DAY(Integer.parseInt(String.valueOf(df.format(Double.parseDouble(amount)/1024))));
+
+						//如天数没到，送null
+						if(sumType.equals("2")&&dayFlow.getFLOW_DAY()==0&&Integer.valueOf(dayFlow.getDAY()).intValue()>=Integer.valueOf(dateString).intValue()) {
+							count =count+1;
+							dayFlow.setFLOW_DAY(null);							
+						}
+						
 						flowDayList.add(dayFlow);
 					}
 				}
@@ -445,4 +466,5 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 		return ResultGenerator.genSuccessResult(outPut);	
 	}
 	
+
 }

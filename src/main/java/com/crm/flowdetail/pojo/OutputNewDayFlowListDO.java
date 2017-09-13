@@ -6,13 +6,16 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class OutputNewDayFlowListDO implements Serializable{
 
-	private List<OutputNewDayFlowDO> FLOW_APPLY_LIST;//应用使用流量TOP5
+	private List<OutputNewDayFlowDO> APP_FLOW_LIST;//应用使用流量TOP5
+
+	public List<OutputNewDayFlowDO> getAPP_FLOW_LIST() {
+		return APP_FLOW_LIST;
+	}
+
+	public void setAPP_FLOW_LIST(List<OutputNewDayFlowDO> aPP_FLOW_LIST) {
+		APP_FLOW_LIST = aPP_FLOW_LIST;
+	}
 	
-	public List<OutputNewDayFlowDO> getFLOW_APPLY_LIST() {
-		return FLOW_APPLY_LIST;
-	}
-	public void setFLOW_APPLY_LIST(List<OutputNewDayFlowDO> fLOW_APPLY_LIST) {
-		FLOW_APPLY_LIST = fLOW_APPLY_LIST;
-	}
+	
 	
 }

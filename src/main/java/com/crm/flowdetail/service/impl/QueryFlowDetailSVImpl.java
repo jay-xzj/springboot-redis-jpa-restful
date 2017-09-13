@@ -240,7 +240,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 						}
 					};
 					Collections.sort(outPutList,com);					
-					outPut.setFLOW_APPLY_LIST(outPutList);
+					outPut.setAPP_FLOW_LIST(outPutList);
 				}
 			}else{
 				throw new ServiceException(null!=respParam.getReturnMsg()?respParam.getReturnMsg():"系统异常，请联系系统管理员！");

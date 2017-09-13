@@ -41,12 +41,12 @@
         		<artifactId>spring-boot-starter-web</artifactId>
         </dependency>    
         
-        <!-- 自动编译加载 -->
+        <!-- 自动编译加载 
         <dependency>
         		<groupId>org.springframework.boot</groupId>
         		<artifactId>spring-boot-devtools</artifactId>
         		<optional>true</optional>
-        </dependency> 
+        </dependency> -->
         
         <!-- oracle驱动，maven 未提供，需外部引入 -->         
          <dependency>

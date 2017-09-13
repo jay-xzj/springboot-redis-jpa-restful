@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +37,10 @@ public class SoapUtil {
 * @author: zhouqishan
 * 
 */
+	private static final Log log = LogFactory.getLog(SoapUtil.class);
+
+	public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
 	
-public static String invokeMethod(String serviceName,Object busiInfo) throws Exception {
 				
 		//查询数据库
 		//cfgWsClientRepository.findByCfgWsClientCode();
@@ -90,8 +94,9 @@ public static String invokeMethod(CfgWsClient cfgWsClient,Object busiInfo) throw
 	//long beginTime = System.currentTimeMillis();
 	try {
 		reqXml = XStreamUtil.getEsbReqXml(busiInfo);
+		log.info("send to ESB starts here:" + reqXml);
 		returnValue = (String)client.invoke(new Object[] {reqXml});
-		System.out.println(returnValue);
+		log.info("receive from ESB starts here:" + returnValue);
 	} catch (Exception e) {
 		returnValue=e.getMessage();
 		throw new Exception(e);

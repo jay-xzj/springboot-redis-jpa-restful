@@ -417,8 +417,8 @@ public class GetterUtil {
     	return false;
 	  }
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(_trim("139 1845 0032"));
-	}
+	}*/
 
 }

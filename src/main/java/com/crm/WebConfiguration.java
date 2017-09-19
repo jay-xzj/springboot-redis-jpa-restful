@@ -1,14 +1,19 @@
 package com.crm;
 
+
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+
 import org.springframework.context.annotation.Configuration;
+
 
 import com.crm.comm.filter.SecurityFilter;
 
 
 
 @Configuration
-public class WebConfiguration {
+public class WebConfiguration{
+	
 	 public FilterRegistrationBean filterRegistration() {
 
 	        FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -19,6 +24,7 @@ public class WebConfiguration {
 	        registration.setOrder(1);
 	        return registration;
 	    }
+	 
 }
 	
 	

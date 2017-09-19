@@ -6,7 +6,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
@@ -39,7 +39,18 @@
 		<dependency>
         		<groupId>org.springframework.boot</groupId>
         		<artifactId>spring-boot-starter-web</artifactId>
-        </dependency>    
+        		<exclusions>
+       			 <exclusion>
+           		 <groupId>org.springframework.boot</groupId>
+           		 <artifactId>spring-boot-starter-tomcat</artifactId>
+        			</exclusion>
+    			</exclusions>
+        </dependency>   
+        <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-tomcat</artifactId>
+		    <scope>provided</scope>
+		</dependency> 
         
         <!-- 自动编译加载 
         <dependency>
@@ -183,12 +194,11 @@
     		<artifactId>json-lib</artifactId>
     		<version>1.0</version>
 	</dependency>
-	
-	
-                       
+	                  
 	</dependencies>
 
 	<build>
+	<!--  
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -197,8 +207,12 @@
                 		<fork>true</fork>
             		</configuration>
 			</plugin>
-		</plugins>
+		</plugins>-->
+	<plugins>
+	<plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-war-plugin</artifactId>
+   </plugin>
+   </plugins>
 	</build>
-
-
 </project>

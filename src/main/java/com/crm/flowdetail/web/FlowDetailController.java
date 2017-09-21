@@ -3,6 +3,7 @@ package com.crm.flowdetail.web;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crm.comm.Result;
 import com.crm.comm.ResultGenerator;
+import com.crm.comm.cfgdata.base.util.DateUtil;
 import com.crm.comm.domain.User;
 import com.crm.comm.repository.UserRepository;
 import com.crm.comm.service.UserService;
@@ -65,42 +67,58 @@ public class FlowDetailController {
 		return result;
 	}
 	
+	
+	public static List<Integer> tempOneAppFlowList= new ArrayList<Integer>(Arrays.asList(300,200,460,454,223,34,324,356,767,23,123,345,124,124,235,32,454,24,234,35,123,23,88,97,79,88,23,124,123,35));
+	public static List<Integer> tempOneAppHourFlowList= new ArrayList<Integer>(Arrays.asList(30,20,46,45,22,34,32,35,76,23,12,34,124,12,23,32,45,24,23,35,13,23,88,97));
+
 	@PostMapping("/QueryAppFlowTest")
     public Result queryAppFlowTest(@RequestBody InputDayAndHourFlowDO req) throws Exception{
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		OutputDayAndHourFlowListDO output = new OutputDayAndHourFlowListDO();
 		List<OutputDayAndHourFlowDO> outPutList = new ArrayList<OutputDayAndHourFlowDO>();  	
-		output.setFLOW_TOTAL(1024);
+		String nowStr = DateUtil.date2String(new Date(),"yyyyMMdd");
+		int count = 0;
+		if(Integer.valueOf(nowStr)>20170930){
+			count=30;
+		}else {
+			count =Integer.valueOf(nowStr.substring(6,8))-1;
+		}	
+		int sum =0;
 		if(req.getQUERY_DATE().length()==6) {
-			output.setAMOUNT(11);
-			for(int i=1;i<=30;i++) {
+			output.setAMOUNT(count);
+			for(int i=0;i<30;i++) {
 				OutputDayAndHourFlowDO a1 = new OutputDayAndHourFlowDO();
-				if(i<10) {
-					a1.setUSED_DATE("2017090"+String.valueOf(i));
-					a1.setFLOW(50);
+				if(i+1<10) {
+					a1.setUSED_DATE("2017090"+String.valueOf(i+1));
+					a1.setFLOW(tempOneAppFlowList.get(i));
+					sum=sum+tempOneAppFlowList.get(i);
 				}
-				else if(i<=11){
-					a1.setUSED_DATE("201709"+String.valueOf(i));
-					a1.setFLOW(100);
+				else if(i+1<=count){
+					a1.setUSED_DATE("201709"+String.valueOf(i+1));
+					a1.setFLOW(tempOneAppFlowList.get(i));
+					sum=sum+tempOneAppFlowList.get(i);
 				}else {
-					a1.setUSED_DATE("201709"+String.valueOf(i));
+					a1.setUSED_DATE("201709"+String.valueOf(i+1));
 					a1.setFLOW(null);
 				}
 				outPutList.add(a1);
 			}
-			
+			output.setFLOW_TOTAL(sum);
+
 		}
 		else if(req.getQUERY_DATE().length()==8) {
 			output.setAMOUNT(24);
-			for(int i=0;i<=23;i++) {
+			for(int i=0;i<24;i++) {
 				OutputDayAndHourFlowDO a1 = new OutputDayAndHourFlowDO();
 				if(i<10) {
-					a1.setUSED_DATE("201709100"+String.valueOf(i));
-					a1.setFLOW(24);
+					a1.setUSED_DATE(req.getQUERY_DATE()+"0"+String.valueOf(i));
+					a1.setFLOW(tempOneAppHourFlowList.get(i));
+					sum=sum+tempOneAppHourFlowList.get(i);
 				}
 				else {
-					a1.setUSED_DATE("20170910"+String.valueOf(i));
-					a1.setFLOW(50);
+					a1.setUSED_DATE(req.getQUERY_DATE()+String.valueOf(i));
+					a1.setFLOW(tempOneAppHourFlowList.get(i));
+					sum=sum+tempOneAppHourFlowList.get(i);
 				}
 				outPutList.add(a1);
 			}
@@ -112,65 +130,113 @@ public class FlowDetailController {
 		output.setAPP_FLOW_LIST(outPutList);
 		return ResultGenerator.genSuccessResult(output);
     }
-	
+
 	@PostMapping("/QueryTotalFlowTest")
 	public Result queryTotalFlowTest(@RequestBody InputTotalFlowDO req) throws Exception{
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		OutputTotalFlowDO outPut = new OutputTotalFlowDO();
-		outPut.setALL_FLOW(4096);
-		outPut.setFREE_FLOW(1024);
+		String nowStr = DateUtil.date2String(new Date(),"yyyyMMdd");
+		int count = 0;
+		if(Integer.valueOf(nowStr)>20170930){
+			count=30;
+		}else {
+			count =Integer.valueOf(nowStr.substring(6,8))-1;
+		}	
+		int sum =0;
+		for(int i=0;i<count;i++) {
+			sum=sum+tempMonthFlowList.get(i);
+		}
+		outPut.setALL_FLOW(8192);
+		outPut.setFREE_FLOW(sum);		
 		outPut.setPAY_FLOW(0);
-		outPut.setUSED_FLOW(1024);
+		outPut.setUSED_FLOW(sum);
 		return ResultGenerator.genSuccessResult(outPut);
 	}
 	
+	public static List<Integer> tempMonthFlowList= new ArrayList<Integer>(Arrays.asList(300,200,460,454,223,34,324,356,767,23,123,345,124,124,235,32,454,24,234,35,123,23,88,97,79,88,23,124,123,35));
+
 	@PostMapping("/QueryAllMonthToDayTest")
     public Result queryAllMonthToDayTest(@RequestBody InputAppDayFlowDO req) throws Exception{
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		OutputDayFlowListDO outPut = new OutputDayFlowListDO();
-		outPut.setAMOUNT(11);
-		outPut.setFLOW_TOTAL(1024);
-		outPut.setFREE_FLOW(1024);
-		outPut.setPAY_FLOW(0);
+		String nowStr = DateUtil.date2String(new Date(),"yyyyMMdd");
+		int count = 0;
+		if(Integer.valueOf(nowStr)>20170930){
+			count=30;
+		}else {
+			count =Integer.valueOf(nowStr.substring(6,8))-1;
+		}	
+		outPut.setAMOUNT(count);
+		int sum = 0;
+		
 		List<OutputDayFlowDO> flowDayList = new ArrayList<OutputDayFlowDO>(); 
 		if(req.getQUERY_DATE().length()==6) {
-			for(int i=1;i<=30;i++) {
+			for(int i=0;i<30;i++) {
 				OutputDayFlowDO a1 = new OutputDayFlowDO();
-				if(i<10) {
-					a1.setDAY("2017090"+String.valueOf(i));
-					a1.setFLOW_DAY(50);
+				if(i+1<10) {
+					a1.setDAY("2017090"+String.valueOf(i+1));
+					a1.setFLOW_DAY(tempMonthFlowList.get(i));
+					sum=sum+tempMonthFlowList.get(i);
 				}
-				else if(i<=11){
-					a1.setDAY("201709"+String.valueOf(i));
-					a1.setFLOW_DAY(100);
+				else if(i+1<=count){
+					a1.setDAY("201709"+String.valueOf(i+1));
+					a1.setFLOW_DAY(tempMonthFlowList.get(i));
+					sum=sum+tempMonthFlowList.get(i);
 				}else {
-					a1.setDAY("201709"+String.valueOf(i));
+					a1.setDAY("201709"+String.valueOf(i+1));
 					a1.setFLOW_DAY(null);
-				}
-				flowDayList.add(a1);
+				}				
+				flowDayList.add(a1);				
 			}			
 		}
 		outPut.setFLOW_DAY_LIST(flowDayList);
+		outPut.setFLOW_TOTAL(sum);
+		outPut.setFREE_FLOW(sum);
+		outPut.setPAY_FLOW(0);
 		
     		return ResultGenerator.genSuccessResult(outPut);
     }
 	
+	
 	public static List<String> tempAppList = new ArrayList<String>(Arrays.asList("1-5","5-6","7-10","1-9","7-13","9-11","15-170","15-6","15-70","9-3"));  
 	public static List<String> tempAppNameList = new ArrayList<String>(Arrays.asList("QQ","腾讯视频","360手机助手","微信","百度手机助手","工商银行","今日头条","京东","美团","支付宝"));
-	public static List<Integer> tempAppFlowList= new ArrayList<Integer>(Arrays.asList(2048,2000,1800,1600,1400,1200,1024,896,800,512));
- 
+	public static List<Integer> tempAppFlowList1= new ArrayList<Integer>(Arrays.asList(2048,2000,1800,1600,1400,1200,1024,896,800,512));
+	public static List<Integer> tempAppFlowList2= new ArrayList<Integer>(Arrays.asList(500,300,150,120,110,108,106,100,50,46));
+	public static List<Integer> tempAppFlowList3= new ArrayList<Integer>(Arrays.asList(50,45,44,38,33,32,26,24,20,19));
+
 
 	@PostMapping("/QueryTopAppTest")
     public Result queryTopAppTest(@RequestBody InputAppDayFlowDO req) throws Exception{
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
+		int count = req.getTOP_AMOUNT();
 		OutputNewDayFlowListDO outPut = new OutputNewDayFlowListDO();
 		List<OutputNewDayFlowDO> outPutList = new ArrayList<OutputNewDayFlowDO>();    
-		if(req.getQUERY_DATE().length()==6||req.getQUERY_DATE().length()==8||req.getQUERY_DATE().length()==10) {//月排行
-			for(int i =0;i<10;i++) {
+		if(req.getQUERY_DATE().length()==6) {//月排行
+			for(int i =0;i<count;i++) {
 				OutputNewDayFlowDO item= new OutputNewDayFlowDO();
 				item.setAPP_CODE(tempAppList.get(i));
 				item.setAPP_NAME(tempAppNameList.get(i));
-				item.setAPP_FLOW(tempAppFlowList.get(i));
+				item.setAPP_FLOW(tempAppFlowList1.get(i));
+				outPutList.add(item);
+		    }
+			outPut.setAPP_FLOW_LIST(outPutList);
+		}
+		if(req.getQUERY_DATE().length()==8) {//日排行
+			for(int i =0;i<count;i++) {
+				OutputNewDayFlowDO item= new OutputNewDayFlowDO();
+				item.setAPP_CODE(tempAppList.get(i));
+				item.setAPP_NAME(tempAppNameList.get(i));
+				item.setAPP_FLOW(tempAppFlowList2.get(i));
+				outPutList.add(item);
+		    }
+			outPut.setAPP_FLOW_LIST(outPutList);
+		}
+		if(req.getQUERY_DATE().length()==10) {//时间排行
+			for(int i =0;i<count;i++) {
+				OutputNewDayFlowDO item= new OutputNewDayFlowDO();
+				item.setAPP_CODE(tempAppList.get(i));
+				item.setAPP_NAME(tempAppNameList.get(i));
+				item.setAPP_FLOW(tempAppFlowList3.get(i));
 				outPutList.add(item);
 		    }
 			outPut.setAPP_FLOW_LIST(outPutList);

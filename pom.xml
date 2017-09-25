@@ -194,6 +194,13 @@
     		<artifactId>json-lib</artifactId>
     		<version>1.0</version>
 	</dependency>
+	
+	<!-- 4A LIB-->
+	<dependency>
+    		<groupId>com.4a.sso</groupId>
+    		<artifactId>busiclient</artifactId>
+    		<version>1.0</version>
+	</dependency>
 	                  
 	</dependencies>
 

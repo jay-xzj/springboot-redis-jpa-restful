@@ -1,10 +1,13 @@
 package com.crm.flowdetail.web;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crm.comm.Result;
@@ -59,6 +63,19 @@ public class FlowDetailController {
     public Result queryAllMonthToDay(@RequestBody InputAppDayFlowDO req) throws Exception{
     		Result result = queryFlowDetailSVImpl.queryMonthDPIByDay(req);
     		return result;
+    }
+	//4A登录认证
+	@ResponseBody
+	@PostMapping("/4AsignIn")
+    public Result login4A(HttpServletRequest req) throws IOException {
+        //Map<String, String> result = new HashMap<String, String>();
+        Result result =new Result();
+		result.setCode(200);
+		result.setMessage("4A Authentication Success");
+        //result.put("flag", "true");
+        //HttpSession a = req.getSession();
+        //result.put("login4aName", (String) req.getSession().getAttribute("user4aname"));
+        return result;
     }
 	
 	@PostMapping("/QueryTotalFlow")

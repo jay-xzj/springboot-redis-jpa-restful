@@ -66,7 +66,7 @@ public class FlowDetailController {
     }
 	//4A登录认证
 	@ResponseBody
-	@PostMapping("/4AsignIn")
+	@PostMapping("/4ASignIn")
     public Result login4A(HttpServletRequest req) throws IOException {
         //Map<String, String> result = new HashMap<String, String>();
         Result result =new Result();

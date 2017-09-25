@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-//项目常量
+//项目常量,完全没用到，下面实现的是例子
 
 
 @Component
@@ -28,8 +28,8 @@ public class Const {
 	public static int COOKIE_TIMEOUT= 30*24*60*60;
 
 	
-	@Autowired(required = true)
+	/*@Autowired(required = true)
 	public void setBasePath(@Value("${demo.base.path}")String basePath) {
 		  Const.BASE_PATH = basePath;
-	}
+	}*/
 }

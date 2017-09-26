@@ -1,4 +1,4 @@
-package com.crm.flowdetai.service;
+package com.crm.flowdetail.service;
 
 
 

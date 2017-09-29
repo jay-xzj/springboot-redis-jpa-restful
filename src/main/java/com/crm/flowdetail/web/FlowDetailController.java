@@ -5,7 +5,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,6 +28,7 @@ import com.crm.comm.cfgdata.base.util.DateUtil;
 import com.crm.comm.domain.User;
 import com.crm.comm.repository.UserRepository;
 import com.crm.comm.service.UserService;
+import com.crm.esb.invoke.pojo.RespParam;
 import com.crm.flowdetail.pojo.InputAppDayFlowDO;
 import com.crm.flowdetail.pojo.InputDayAndHourFlowDO;
 import com.crm.flowdetail.pojo.InputQueryFlowDetailDO;
@@ -77,6 +80,20 @@ public class FlowDetailController {
         //result.put("login4aName", (String) req.getSession().getAttribute("user4aname"));
         return result;
     }
+	
+	@PostMapping("/MobileCheck")
+    public Result MobileCheck(@RequestBody InputAppDayFlowDO req) throws Exception {
+		Map bceMap = new HashMap();
+	    List<Map> bceList = new ArrayList<Map>();
+	    bceMap.put("KEY", "BILL_ID");
+	    bceMap.put("VALUE", req.getBILL_ID());
+	    bceList.add(bceMap);
+	    //modify by xulq2 2016-01-05 
+	    RespParam resp = queryFlowDetailSVImpl.checkBceRule(req.getBILL_ID(), "20141211", "1", bceList);
+	    return ResultGenerator.genSuccessResult(resp);	
+    }
+	
+	
 	
 	@PostMapping("/QueryTotalFlow")
 	public Result queryTotalFlow(@RequestBody InputTotalFlowDO req) throws Exception{

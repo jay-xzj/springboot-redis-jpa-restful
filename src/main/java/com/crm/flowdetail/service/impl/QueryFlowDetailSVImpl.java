@@ -97,7 +97,10 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			
 			if(respParam.isSuccess()){				
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FLOW_DAY_LIST","FLOW_DAY_INFO");
-				if(null != flowAppList && flowAppList.size()>0){
+				if(flowAppList==null||flowAppList.size()==0) {
+					return ResultGenerator.genNoDataResult("查询无数据");
+				}
+				else {
 					Integer flowTotal =0;//各个flow相加
 					Integer amount =flowAppList.size();//amount默认为list的size
 					OutputDayAndHourFlowDO dayFlow = null;
@@ -208,7 +211,11 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 			RespParam respParam =SoapUtil.invokeMethodForResp(cfgWsClient,busiInfo);		
 			if(respParam.isSuccess()){						
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "APP_FLOW_LIST","APP_FLOW_INFO");
-				if(null != flowAppList && flowAppList.size()>0){
+				
+				if(flowAppList==null||flowAppList.size()==0) {
+					return ResultGenerator.genNoDataResult("查询无数据");
+				}
+				else{
 					OutputNewDayFlowDO dayFlow = null;
 					for(Map map:flowAppList){
 						dayFlow = new OutputNewDayFlowDO();
@@ -301,7 +308,11 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 				outPut.setFREE_FLOW(freeAmount);
 
 				List<Map<String, Object>> flowAppList = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FLOW_DAY_LIST","FLOW_DAY_INFO");
-				if(null != flowAppList && flowAppList.size()>0){
+				
+				if(flowAppList==null||flowAppList.size()==0) {
+					return ResultGenerator.genNoDataResult("查询无数据");
+				}
+				else{
 					outPut.setAMOUNT(flowAppList.size());
 					//设置每日流量，先按天数排序，由小到大
 					Comparator com1 = new Comparator(){
@@ -393,6 +404,12 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 		RespParam respParam = SoapUtil.invokeMethodForResp(cfgWsClient, busiInfo);
 		
 		if(respParam.isSuccess()){
+			
+			if(respParam.getBusiInfo().get("FLOW_TOTAL")==null
+					&&respParam.getBusiInfo().get("FREE_FLOW")==null
+						&&respParam.getBusiInfo().get("PAY_FLOW")==null) {
+				return ResultGenerator.genNoDataResult("查询订购总量无数据");
+			}
 			String flowTotal = respParam.getBusiInfo().get("FLOW_TOTAL")==null?"0":respParam.getBusiInfo().get("FLOW_TOTAL").toString();
 			String freeFlow = respParam.getBusiInfo().get("FREE_FLOW")==null?"0":respParam.getBusiInfo().get("FREE_FLOW").toString();
 			String payFlow = respParam.getBusiInfo().get("PAY_FLOW")==null?"0":respParam.getBusiInfo().get("PAY_FLOW").toString();
@@ -426,9 +443,12 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
         //double flowUsage = 0;
 		double maxDataFlow=0;
 
-        if(respParam.isSuccess()){
-	        	List<Map<String,Object>> freeResInfos = CollectionsUtil.getListBusiInfo(respParam2.getBusiInfo(), "FREE_RES_LIST","FREE_RES_INFO");
-	        	if(null != freeResInfos && freeResInfos.size()>0){
+        if(respParam2.isSuccess()){
+	        	List<Map<String,Object>> freeResInfos = CollectionsUtil.getListBusiInfo(respParam2.getBusiInfo(), "FREE_RES_LIST","FREE_RES_INFO");        
+	        	if(freeResInfos==null||freeResInfos.size()==0) {
+				return ResultGenerator.genNoDataResult("查询已使用总量无数据");
+	        	}
+	        	else{
 	        		for(BsStaticData staticData : staticList){
 					String codeValue = staticData.getCodeValue();
 					for (Map map: freeResInfos) {
@@ -455,10 +475,7 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 					}
 				}        		
 	        		outPut.setALL_FLOW(Integer.valueOf(df.format(maxDataFlow/1024)));
-			}	   
-	        	else {
-	        		throw new ServiceException(null!=respParam2.getReturnMsg()?respParam2.getReturnMsg():"系统异常，请联系系统管理员!ESB查询结果列表为空!");
-	        	}
+			}	   	        	
         }else {
 			throw new ServiceException(null!=respParam2.getReturnMsg()?respParam2.getReturnMsg():"系统异常，请联系系统管理员！");
         }
@@ -466,5 +483,44 @@ public class QueryFlowDetailSVImpl implements IQueryFlowDetailSV{
 		return ResultGenerator.genSuccessResult(outPut);	
 	}
 	
+	//校验手机号码
+	public RespParam checkBceRule(String billId,String checkId,String checkType,List<Map> bceList) throws Exception {
+			
+		String serviceName = ESBInterFaceCode.SRV_ESB_SO_PERSONAL_ORDER_CHECK_003;
+		CfgWsClient cfgWsClient =cfgWsClientCacheService.getObj(serviceName);
+		
+		com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_INFO paramInfo = null;
+		com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.BUSI_INFO busiInfo = new com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.BUSI_INFO();
+		com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_LIST paramList = new com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_LIST();
+		List<com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_INFO> bcelist = new ArrayList<com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_INFO>();
+			  
+		busiInfo.setBILL_ID(billId);
+		busiInfo.setCHECK_ID(checkId);
+		busiInfo.setCHECK_TYPE(checkType);
+		
+		if(bceList!=null&&(bceList.size()>0)){
+			for (int i = 0; i < bceList.size(); i++) {
+				paramInfo = new com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_INFO();
+				paramInfo.setKEY((String) bceList.get(i).get("KEY"));
+				paramInfo.setVALUE((String) bceList.get(i).get("VALUE"));
+				bcelist.add(paramInfo);
+		   }
+		}
+		  
+		if(bcelist!=null&&(bcelist.size()>0)){
+			paramList.setPARAM_INFO(bcelist.toArray(new com.crm.flowdetail.xbeans.esb_so_personal_order_check_003.PARAM_INFO[0]));
+		    	busiInfo.setPARAM_LIST(paramList);
+		}
+		
+	    RespParam respParam = SoapUtil.invokeMethodForResp(cfgWsClient, busiInfo);
+	    
+	    return respParam;
+	  
+		/*if(respParam.isSuccess()){
+        		List<Map<String,Object>> freeResInfos = CollectionsUtil.getListBusiInfo(respParam.getBusiInfo(), "FREE_RES_LIST","FREE_RES_INFO");
+		}*/
+		
+	}
+			
 
 }

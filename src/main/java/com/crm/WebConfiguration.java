@@ -37,6 +37,7 @@ public class WebConfiguration{
 	        FilterRegistrationBean registration = new FilterRegistrationBean();
 	        registration.setFilter(portalFilter);
 	        registration.addUrlPatterns("/*");///auth/4AsignIn/
+	        //registration.addUrlPatterns("/auth/4AsignIn/");
 	        //本地实现类
 	        registration.addInitParameter("impl-classname", "com.crm.login.impl.PopedomImpl");
 	        //允许通过的路径

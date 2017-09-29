@@ -24,4 +24,10 @@ public class ResultGenerator {
                 .setCode(ResultCode.FAIL)
                 .setMessage(message);
     }
+    
+    public static Result genNoDataResult(String message) {
+        return new Result()
+                .setCode(ResultCode.DATA_NOT_FOUND)
+                .setMessage(message);
+    }
 }

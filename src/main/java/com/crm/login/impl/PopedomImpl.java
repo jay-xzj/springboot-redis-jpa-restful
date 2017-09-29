@@ -6,6 +6,7 @@ import com.asiainfo.portal.framework.busiclient.IPopedom;
 import com.asiainfo.portal.framework.busiclient.LogUtil;
 import com.asiainfo.portal.framework.busiclient.UserInfo;
 import com.crm.comm.Result;
+import com.crm.comm.ResultCode;
 import com.crm.comm.ResultMsg;
 import com.crm.comm.exception.ServiceException;
 
@@ -61,7 +62,7 @@ public class PopedomImpl extends DefaultPopedomImpl implements IPopedom {
     		    response.setCharacterEncoding("UTF-8");
     	        response.setHeader("Content-type", "application/json;charset=UTF-8");
 			Result result = new Result();
-			result.setCode(250);
+			result.setCode(ResultCode.UNAUTHORIZED);
 			result.setMessage("4A Authentication Failed");
 			//throw new ServiceException("校验失败");			
 			try {
